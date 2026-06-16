@@ -163,7 +163,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div class="divider-v"></div>
     <div>
       <div class="header-title">Plate Nesting Tool</div>
-      <div class="header-sub">96&Prime;&nbsp;&times;&nbsp;240&Prime; MASTER PLATE &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING</div>
+      <div class="header-sub">96&Prime;&nbsp;&times;&nbsp;240&Prime; MASTER PLATE &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 2 &nbsp;&middot;&nbsp; LAST EDITED: JUN 16, 2026</div>
     </div>
   </div>
   <div class="flex" style="gap:10px">
@@ -466,9 +466,9 @@ function loadCSV(){
       n=c[0]; q=c[1]; shapeRaw=c[2]; col6=parseFloat(c[3])||0; col7=parseFloat(c[4])||0; thk=parseFloat(c[5])||0;
     }
     if(!n||!col6){skipped++;return;}
-    if(!thk){flagged.push(n+': Missing thickness — part skipped');skipped++;return;}
     const s=resolveShape(shapeRaw,col6,col7,thk);
     if(s.type==='skip'){if(s.flag)flagged.push(n+': '+s.flag);skipped++;return;}
+    if(!thk){flagged.push(n+': Missing thickness — part skipped');skipped++;return;}
     const pid=Date.now()+Math.random();
     // Check flat pattern dimensions against master plate limits
     const _overW=s.w>96, _overH=s.h>240;
