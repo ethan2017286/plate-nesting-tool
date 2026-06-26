@@ -54,6 +54,7 @@ a{color:inherit}
 .fg3{grid-template-columns:2fr 1fr 1fr}
 .fg4{grid-template-columns:2fr 1fr 1fr 1fr}
 .fg5{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+.fg6{grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr}
 .flabel{font-size:10px;color:var(--text3);margin-bottom:5px;letter-spacing:0.06em;text-transform:uppercase;font-weight:500}
 input[type=text],input[type=number],select,textarea{
   width:100%;padding:9px 12px;
@@ -163,7 +164,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div class="divider-v"></div>
     <div>
       <div class="header-title">Plate Nesting Tool</div>
-      <div class="header-sub">96&Prime;&nbsp;&times;&nbsp;240&Prime; MASTER PLATE &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 2 &nbsp;&middot;&nbsp; LAST EDITED: JUN 16, 2026</div>
+      <div class="header-sub">96&Prime;&nbsp;&times;&nbsp;240&Prime; MASTER PLATE &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 7 &nbsp;&middot;&nbsp; LAST EDITED: JUN 26, 2026</div>
     </div>
   </div>
   <div class="flex" style="gap:10px">
@@ -190,7 +191,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
       <button class="tpill" onclick="selT('ringsect',this)">Ring Sect</button>
       <button class="tpill" onclick="selT('disc',this)">Disc</button>
     </div>
-    <div class="fg fg5" id="dynF"></div>
+    <div class="fg fg6" id="dynF"></div>
     <div class="fe" style="margin-top:14px">
       <button class="btn btn-sm btn-red" onclick="addPart()">+ Add to list</button>
     </div>
@@ -201,7 +202,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div class="ctitle">&#9776;&ensp;Bulk Import via CSV</div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.8">
       <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">Comma CSV</strong>&nbsp;
-      <code>Name, Qty, Type, W_or_OD, H_or_ID_or_Length, Thk</code> &nbsp;— Types: rect &bull; cyl &bull; ring &bull; ringsect &bull; disc<br>
+      <code>Name, Qty, Material, Type, W_or_OD, H_or_ID_or_Length, Thk</code> &nbsp;— Types: rect &bull; cyl &bull; ring &bull; ringsect &bull; disc<br>
       <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">Workbook paste</strong>&nbsp;
       Copy &amp; paste rows directly — tab-separated columns auto-detected.<br>
       <span style="color:var(--text3);font-size:11px">
@@ -214,7 +215,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
         <code style="font-size:10px">Other</code> = &#9888; flagged
       </span>
     </div>
-    <textarea id="csvIn" rows="5" placeholder="Comma: Flange A, 4, ring, 12, 8, 0.500&#10;Comma: Base Plate, 2, rect, 24, 18, 0.375&#10;&#10;Workbook paste:&#10;Support Repad&#9;2&#9;CS&#9;Rect&#9;lb&#9;14.661&#9;6.000&#9;0.500"></textarea>
+    <textarea id="csvIn" rows="5" placeholder="Comma: Flange A, 4, 316, ring, 12, 8, 0.500&#10;Comma: Base Plate, 2, CS, rect, 24, 18, 0.375&#10;&#10;Workbook paste:&#10;Support Repad&#9;2&#9;CS&#9;Rect&#9;lb&#9;14.661&#9;6.000&#9;0.500"></textarea>
     <div id="csvWarn"></div>
     <div class="fe" style="margin-top:10px">
       <button class="btn btn-ghost btn-sm" onclick="clearAll()">Clear all</button>
@@ -322,6 +323,7 @@ function dynF(){
   const t=CT;
   let h='<div><div class="flabel">Part name</div><input type="text" id="fN" placeholder="e.g. Flange A"></div>';
   h+='<div><div class="flabel">Qty</div><input type="number" id="fQ" value="1" min="1"></div>';
+  h+='<div><div class="flabel">Material</div><select id="fM"><option value="">-- Select --</option><option value="A-20">A-20</option><option value="NI-200">NI-200</option><option value="304">304</option><option value="310">310</option><option value="316">316</option><option value="321">321</option><option value="400">400</option><option value="600">600</option><option value="625">625</option><option value="800">800</option><option value="825">825</option><option value="2205">2205</option><option value="2507">2507</option><option value="C-22">C-22</option><option value="C-276">C-276</option><option value="CS">CS</option><option value="NB">NB</option><option value="PTFE">PTFE</option><option value="TA">TA</option><option value="TI-2">TI-2</option><option value="TI-7">TI-7</option><option value="TI-12">TI-12</option><option value="ZR">ZR</option></select></div>';
   if(t==='rect'){
     h+='<div><div class="flabel">Width (in)</div><input type="number" id="fW" placeholder="24" min="0.1" step="0.1"></div>';
     h+='<div><div class="flabel">Height (in)</div><input type="number" id="fH" placeholder="18" min="0.1" step="0.1"></div>';
@@ -346,6 +348,9 @@ function dynF(){
 function addPart(){
   const n=(document.getElementById('fN').value||'').trim()||'Part';
   const q=parseInt(document.getElementById('fQ').value)||1;
+  const mE=document.getElementById('fM');
+  const mat=(mE?mE.value||'':'').trim();
+  if(!mat){if(mE)mE.focus();return;}
   const wE=document.getElementById('fW'),hE=document.getElementById('fH')||null;
   const tE=document.getElementById('fT');
   const w=wE?parseFloat(wE.value)||0:0,h=hE?parseFloat(hE.value)||0:0;
@@ -372,10 +377,10 @@ function addPart(){
     const warn=document.getElementById('addWarn');
     if(warn) warn.innerHTML='';
   }
-  parts.push({id:Date.now()+Math.random(),name:n,type:CT,w:pw,h:ph,qty:q,thk,od:CT==='cyl'?w:undefined,oversize:(overW||overH)});
+  parts.push({id:Date.now()+Math.random(),name:n,type:CT,w:pw,h:ph,qty:q,thk,mat,od:CT==='cyl'?w:undefined,oversize:(overW||overH)});
   rp();
   document.getElementById('fN').value='';document.getElementById('fQ').value='1';
-  if(wE)wE.value='';if(hE)hE.value='';if(tE)tE.value='';document.getElementById('fN').focus();
+  if(mE)mE.value='';if(wE)wE.value='';if(hE)hE.value='';if(tE)tE.value='';document.getElementById('fN').focus();
 }
 function rmPart(id){parts=parts.filter(p=>p.id!==id);rp();}
 function clearAll(){if(parts.length&&!confirm('Clear all parts?'))return;parts=[];rp();}
@@ -386,11 +391,11 @@ function rp(){
   const tot=parts.reduce((s,p)=>s+p.qty,0);
   document.getElementById('rbi').textContent=parts.length+' part type'+(parts.length!==1?'s':'')+' · '+tot+' piece'+(tot!==1?'s':'');
   const bc={'rect':'br','ring':'bg','ringsect':'bg','cyl':'ba','disc':'bp','custom':'br'};
-  w.innerHTML='<table><thead><tr><th style="width:28%">Name</th><th>Type</th><th>W / Flat W</th><th>H / ID / Len</th><th>Thk</th><th>Qty</th><th style="width:40px"></th></tr></thead><tbody>'+
+  w.innerHTML='<table><thead><tr><th style="width:22%">Name</th><th>Qty</th><th>Material</th><th>Type</th><th>W / Flat W</th><th>H / ID / Len</th><th>Thk</th><th style="width:40px"></th></tr></thead><tbody>'+
     parts.map(p=>{
-      const rowStyle=p.oversize?'background:rgba(186,117,23,0.08);':'';
+      const rowStyle=p.oversize?'background:rgba(186,117,23,0.08);':((!p.mat||!p.mat.trim())?'background:rgba(186,117,23,0.05);':'');
       const oversizeTag=p.oversize?'<span style="font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(186,117,23,0.15);color:var(--amber-text);border:0.5px solid rgba(186,117,23,0.3);margin-left:6px">&#9888; exceeds plate</span>':'';
-      return '<tr style="'+rowStyle+'"><td style="font-weight:500">'+p.name+oversizeTag+'</td><td><span class="badge '+(bc[p.type]||'br')+'">'+p.type+'</span></td><td>'+p.w.toFixed(3)+'″</td><td>'+(p.h>0?p.h.toFixed(3)+'″':'—')+'</td><td>'+(p.thk?p.thk.toFixed(3)+'″':'—')+'</td><td><span class="qty-pill">'+p.qty+'</span></td><td><button class="btn-del" onclick="rmPart('+p.id+')">&#10005;</button></td></tr>';
+      return '<tr style="'+rowStyle+'"><td style="font-weight:500">'+p.name+oversizeTag+'</td><td><span class="qty-pill">'+p.qty+'</span></td><td><span style="font-size:11px;font-weight:500;color:var(--text2)">'+(p.mat||'—')+'</span></td><td><span class="badge '+(bc[p.type]||'br')+'">'+p.type+'</span></td><td>'+p.w.toFixed(3)+'″</td><td>'+(p.h>0?p.h.toFixed(3)+'″':'—')+'</td><td>'+(p.thk?p.thk.toFixed(3)+'″':'—')+'</td><td><button class="btn-del" onclick="rmPart('+p.id+')">&#10005;</button></td></tr>';
     }).join('')+'</tbody></table>';
 }
 function loadCSV(){
@@ -457,13 +462,13 @@ function loadCSV(){
     const isTab=line.includes('\t');
     const c=isTab?line.split('\t').map(s=>s.trim()):line.split(',').map(s=>s.trim());
     if(c.length<3)return;
-    let n,q,shapeRaw,col6,col7,thk;
+    let n,q,mat,shapeRaw,col6,col7,thk;
     if(isTab){
       // Workbook columns: Name[0] Qty[1] Material[2] Shape[3] Unit[4] W/OD[5] H/Length[6] Thickness[7]
-      n=c[0]; q=c[1]; shapeRaw=c[3]; col6=parseFloat(c[5])||0; col7=parseFloat(c[6])||0; thk=parseFloat(c[7])||0;
+      n=c[0]; q=c[1]; mat=(c[2]||'').trim(); shapeRaw=c[3]; col6=parseFloat(c[5])||0; col7=parseFloat(c[6])||0; thk=parseFloat(c[7])||0;
     } else {
-      // Manual CSV: Name, Qty, Type, W_or_OD, H_or_Length, Thk
-      n=c[0]; q=c[1]; shapeRaw=c[2]; col6=parseFloat(c[3])||0; col7=parseFloat(c[4])||0; thk=parseFloat(c[5])||0;
+      // Manual CSV: Name, Qty, Material, Type, W_or_OD, H_or_Length, Thk
+      n=c[0]; q=c[1]; mat=(c[2]||'').trim(); shapeRaw=c[3]; col6=parseFloat(c[4])||0; col7=parseFloat(c[5])||0; thk=parseFloat(c[6])||0;
     }
     if(!n||!col6){skipped++;return;}
     const s=resolveShape(shapeRaw,col6,col7,thk);
@@ -478,7 +483,7 @@ function loadCSV(){
       if(_overH) _msgs.push('length '+s.h.toFixed(3)+'″ exceeds max plate length (240″)');
       flagged.push(n+': '+_msgs.join(' and ')+' — cannot be nested on a standard plate');
     }
-    parts.push({id:pid,name:n,type:s.type,w:s.w,h:s.h,qty:parseInt(q)||1,thk,oversize:(_overW||_overH),od:s.od||undefined,id_:s.id_||undefined});
+    parts.push({id:pid,name:n,type:s.type,w:s.w,h:s.h,qty:parseInt(q)||1,thk,mat:mat||'',oversize:(_overW||_overH),od:s.od||undefined,id_:s.id_||undefined});
     if(s.flag) flagged.push(n+': '+s.flag);
     a++;
   });
@@ -542,6 +547,39 @@ function totalCutLength(sheets){
 }
 
 // Formats minutes into h:mm:ss string
+// ── Material density table (lb/in³) ─────────────────────────────────────────
+const DENSITY={
+  'CS':0.283,
+  '304':0.290,'310':0.290,'316':0.290,'321':0.290,
+  '800':0.290,
+  '2205':0.282,
+  '600':0.300,
+  '625':0.305,
+  '825':0.294,
+  'A-20':0.291,
+  'C-22':0.314,
+  'C-276':0.320,
+  '400':0.320,
+  'NI-200':0.321,
+  'TI-2':0.163,'TI-7':0.163,'TI-12':0.163,
+  'TA':0.602,
+  'ZR':0.234,
+  'NB':0.310,
+  'PTFE':0.081
+};
+
+// Returns density for a material string, or null if not found
+function getDensity(mat){
+  if(!mat) return null;
+  return DENSITY[mat.trim()]||null;
+}
+
+// Formats weight in lbs — show decimals only when needed
+function fmtWeight(lbs){
+  if(!lbs||lbs<=0) return '—';
+  return lbs.toFixed(2)+' lbs';
+}
+
 function fmtTime(mins){
   if(!mins||mins<=0) return '—';
   const rounded=Math.round(mins);
@@ -718,15 +756,19 @@ function getOrientations(item){
 //   score-based shelf packing with 90° rotation.
 function groupBySharedDim(items,zh,tol){
   tol=tol||0.01;
+  // Circular parts (ring, disc) have equal w=h bbox — they gain nothing from
+  // column grouping and are better handled by the row-based shelf packer.
+  // Exclude them here so they fall through to Phase 2.
+  const colItems=items.filter(p=>p.type!=='ring'&&p.type!=='disc');
   const dimCount={};
-  items.forEach(p=>{
+  colItems.forEach(p=>{
     const bb=bbox(p);
     const wr=Math.round(bb.w*1000)/1000,hr=Math.round(bb.h*1000)/1000;
     dimCount[wr]=(dimCount[wr]||0)+1;
     if(hr!==wr) dimCount[hr]=(dimCount[hr]||0)+1;
   });
   const groups={};
-  items.forEach(p=>{
+  colItems.forEach(p=>{
     const bb=bbox(p);
     const wr=Math.round(bb.w*1000)/1000,hr=Math.round(bb.h*1000)/1000;
     const wc=dimCount[wr]||0,hc=dimCount[hr]||0;
@@ -791,11 +833,15 @@ function shelfPack(items,zw,zh,ox,oy,kerf,spacing){
   if(leftovers.length>0){
     const startY=placed.length>0?Math.max(...placed.map(p=>p.py+p.bh))+gap-oy:0;
     const shelves=[];
+    let maxRowX=0; // global max row width across all shelves
     const rem=[...leftovers].sort((a,b)=>{
       const ba=bbox(a),bb2=bbox(b);
       return(Math.max(bb2.w,bb2.h)-Math.max(ba.w,ba.h))||(Math.min(bb2.w,bb2.h)-Math.min(ba.w,ba.h));
     });
-    function tryFill(item,sy,sh,cx){
+    function tryFill(item,sy,sh,cx,shelfOpenerId){
+      // Same-id items (matching the shelf opener) get priority over mixed sizes.
+      // This keeps like-parts together in rows and prevents wider items from
+      // unnecessarily broadening the cutout width.
       let best=null;
       for(const o of getOrientations(item)){
         if(o.bw>zw-cx||o.bh>zh-sy) continue;
@@ -809,9 +855,18 @@ function shelfPack(items,zw,zh,ox,oy,kerf,spacing){
       }
       return best;
     }
+    function isSameGroup(item,openerId){
+      return item.id===openerId;
+    }
     function scoreO(o,cnt){
       const pr=Math.max(1,Math.floor((zw+gap)/(o.bw+gap)));
-      return Math.ceil(cnt/pr)*o.bh+(Math.ceil(cnt/pr)-1)*gap;
+      const rows=Math.ceil(cnt/pr);
+      const heightScore=rows*o.bh+(rows-1)*gap;
+      const rowWidth=Math.min(cnt,pr)*o.bw+(Math.min(cnt,pr)-1)*gap;
+      // When all items fit in one row, rank by widest row first (maximises plate width use).
+      // When items need multiple rows, rank by minimum total height (minimises plate length).
+      if(rows===1) return -rowWidth+(heightScore/100000);
+      return heightScore-(rowWidth/100000);
     }
     while(rem.length>0){
       const sy=shelves.length>0?shelves[shelves.length-1].y+shelves[shelves.length-1].h+gap:startY;
@@ -829,16 +884,40 @@ function shelfPack(items,zw,zh,ox,oy,kerf,spacing){
       const shelf={y:sy,h:fo.bh,x:0};shelves.push(shelf);
       placed.push({...fi,px:ox+shelf.x,py:oy+shelf.y,bw:fo.bw,bh:fo.bh,nestedInRing:false,rotated:fo.rot===90});
       shelf.x+=fo.bw+gap;rem.splice(fidx,1);
+      // maxRowX is updated globally across all shelves (= current cutout width)
+      maxRowX=placed.length>0?Math.max(...placed.map(p=>p.px-ox+p.bw)):maxRowX;
       let filled=true;
       while(filled&&rem.length>0){
         filled=false;let bi=null,bo=null,bidx=-1;
+        // First pass: same-id items (keep like-parts together in a row)
         for(let i=0;i<rem.length;i++){
-          const o=tryFill(rem[i],shelf.y,shelf.h,shelf.x);
+          if(!isSameGroup(rem[i],fi.id)) continue;
+          const o=tryFill(rem[i],shelf.y,shelf.h,shelf.x,fi.id);
           if(o&&(!bi||o.bw>bo.bw)){bi=rem[i];bo=o;bidx=i;}
+        }
+        // Second pass: different items — mix if it doesn't widen the cutout
+        // AND the item fits vertically (may extend shelf height, that's ok).
+        if(!bi){
+          for(let i=0;i<rem.length;i++){
+            const bb2=bbox(rem[i]);
+            // Try with relaxed shelf height (item can extend the shelf)
+            let o=null;
+            for(const oo of getOrientations(rem[i])){
+              if(oo.bw>zw-shelf.x) continue;
+              if(oo.bh>zh-shelf.y) continue; // must fit on plate vertically
+              if(!o||oo.bw>o.bw) o=oo;
+            }
+            if(!o) continue;
+            // Reject if mixing would widen beyond current cutout max width
+            if(shelf.x+o.bw>maxRowX+0.001) continue;
+            if(!bi||o.bw>bo.bw){bi=rem[i];bo=o;bidx=i;}
+          }
         }
         if(bi){
           placed.push({...bi,px:ox+shelf.x,py:oy+shelf.y,bw:bo.bw,bh:bo.bh,nestedInRing:false,rotated:bo.rot===90});
-          shelf.x+=bo.bw+gap;shelf.h=Math.max(shelf.h,bo.bh);rem.splice(bidx,1);filled=true;
+          shelf.x+=bo.bw+gap;shelf.h=Math.max(shelf.h,bo.bh);
+          maxRowX=Math.max(maxRowX,shelf.x-gap);
+          rem.splice(bidx,1);filled=true;
         }
       }
     }
@@ -929,6 +1008,8 @@ function cutout(placed,margin){
 
 function runNesting(){
   if(!parts.length){go('parts');toast('Add parts first');return;}
+  const missingMat=parts.filter(p=>!p.mat||!p.mat.trim());
+  if(missingMat.length){toast(missingMat.length+' part'+(missingMat.length!==1?'s':'')+' missing material — check parts list');go('parts');return;}
   const missingThk=parts.filter(p=>!p.thk||p.thk<=0);
   if(missingThk.length){toast(missingThk.length+' part'+(missingThk.length!==1?'s':'')+' missing thickness — check parts list');go('parts');return;}
   // Warn about parts that exceed plate dimensions — they will be skipped in nesting
@@ -948,12 +1029,17 @@ function runNesting(){
   else if(mode==='custom'||mode==='both')cands.push({w:cW,h:cH,label:'Custom '+cW+'″×'+cH+'″'});
   if(mode==='std'||mode==='both')[...aStock].sort((a,b)=>a-b).forEach(i=>cands.push({...STOCK[i],label:'Stock '+STOCK[i].l+'″'}));
   if(!cands.length)cands=[{w:96,h:240,label:'Master 96″×240″'}];
-  // Group parts by thickness and nest each group independently
-  const thkMap={};
-  parts.forEach(p=>{const k=p.thk.toFixed(3);if(!thkMap[k])thkMap[k]=[];thkMap[k].push(p);});
-  const sortedThks=Object.keys(thkMap).sort((a,b)=>parseFloat(a)-parseFloat(b));
-  const thkResults=sortedThks.map(thkKey=>{
-    const grpParts=thkMap[thkKey];
+  // Group parts by Material + Thickness — each unique combo = separate nest
+  const matThkMap={};
+  parts.forEach(p=>{
+    const k=(p.mat||'Unknown')+' @ '+p.thk.toFixed(3)+'"';
+    if(!matThkMap[k])matThkMap[k]=[];
+    matThkMap[k].push(p);
+  });
+  const sortedKeys=Object.keys(matThkMap).sort();
+  const thkResults=sortedKeys.map(thkKey=>{
+    const grpParts=matThkMap[thkKey];
+    const thkVal=grpParts[0].thk;
     let exp=[];grpParts.forEach(p=>{for(let i=0;i<p.qty;i++)exp.push({...p,iid:p.id+'_'+i});});
     exp.sort((a,b)=>{const ba=bbox(a),bb2=bbox(b);return(bb2.h-ba.h)||(bb2.w-ba.w);});
     const tP=exp.length;
@@ -979,9 +1065,16 @@ function runNesting(){
       const placed=sheets.reduce((s,sh)=>s+sh.placed.length,0);
       const util=sheets.length?Math.round((tA/(plate.w*plate.h*sheets.length))*100):0;
       const _cutLen=parseFloat(totalCutLength(sheets).toFixed(2));
-      const _rate=getCutRate(parseFloat(thkKey));
+      const _rate=getCutRate(thkVal);
       const _cutMins=_rate&&_cutLen>0?parseFloat((_cutLen/_rate).toFixed(2)):null;
-      results.push({plate,sheets,util,scrap:100-util,placeCount:placed,total:tP,unplaced:rem.length,cutLen:_cutLen,cutMins:_cutMins,cutRate:_rate});
+      // Plate weight: Thk × CutoutW × CutoutH × Density × Sheets
+      const _density=getDensity(grpParts[0]&&grpParts[0].mat);
+      const _plateWt=(_density&&sheets.length>0)?
+        sheets.reduce((sum,sh)=>{
+          const co=cutout(sh.placed,margin);
+          return sum+thkVal*(co.w||plate.w)*(co.h||plate.h)*_density;
+        },0):null;
+      results.push({plate,sheets,util,scrap:100-util,placeCount:placed,total:tP,unplaced:rem.length,cutLen:_cutLen,cutMins:_cutMins,cutRate:_rate,plateWt:_plateWt?parseFloat(_plateWt.toFixed(2)):null});
     }
     results.sort((a,b)=>a.scrap-b.scrap||a.sheets.length-b.sheets.length);
     return{thk:parseFloat(thkKey),thkLabel:thkKey+'″',results,parts:grpParts};
@@ -998,7 +1091,7 @@ function renderR(thkResults){
   thkResults.forEach((tg,ti)=>{
     const best=tg.results[0];
     html+='<div style="margin-bottom:8px;padding:10px 14px;background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--radius-lg)">';
-    html+='<div style="font-size:12px;font-weight:600;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">'+tg.thkLabel+' Plate &mdash; '+tg.parts.length+' part type'+(tg.parts.length!==1?'s':'')+', '+tg.results[0].total+' pieces</div>';
+    html+='<div style="font-size:12px;font-weight:600;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">'+tg.thkLabel+' &mdash; '+tg.parts.length+' part type'+(tg.parts.length!==1?'s':'')+', '+tg.results[0].total+' pieces</div>';
     const _oversized=tg.parts.filter(p=>p.oversize||(p.w>96||p.h>240));
     if(_oversized.length){
       html+='<div class="alert aw" style="margin-bottom:10px;padding:8px 12px"><span>&#9888;</span><div><strong>'+_oversized.length+' part'+(oversized!==1?'s':'')+' cannot be nested</strong> — ';
@@ -1017,8 +1110,8 @@ function renderR(thkResults){
       html+='<div class="rcard '+(ib?'best':'')+'" style="margin-bottom:10px"><div class="rheader"><div class="flex" style="gap:10px"><span style="font-weight:500;font-size:14px">'+r.plate.label+'</span>'+(ib?'<span class="badge" style="background:var(--red-dim);border:0.5px solid var(--red-border);color:var(--red-text)">Best fit</span>':'')+(r.unplaced?'<span class="badge" style="background:rgba(186,117,23,0.12);border:0.5px solid rgba(186,117,23,0.3);color:var(--amber-text)">'+r.unplaced+' unplaced</span>':'')+'</div><span style="font-size:12px;color:var(--text3)">'+r.sheets.length+' sheet'+(r.sheets.length!==1?'s':'')+'</span></div>';
       const _cutLenFmt=r.cutLen?(r.cutLen>=12?(r.cutLen/12).toFixed(1)+' ft':r.cutLen.toFixed(1)+' in'):'—';
       const _cutTimeFmt=fmtTime(r.cutMins);
-      const _rateStr=r.cutRate?r.cutRate.toFixed(3)+' in/min':'—';
-      html+='<div class="rbody"><div class="metrics" style="grid-template-columns:repeat(5,1fr)"><div class="metric"><div class="mval" style="font-size:16px;color:#85B7EB">'+_cutLenFmt+'</div><div class="mlbl">Linear Cut Length</div></div><div class="metric"><div class="mval" style="font-size:15px;color:'+vc+'">'+_cutTimeFmt+'</div><div class="mlbl">Est. Cut Time</div></div><div class="metric"><div class="mval">'+r.placeCount+'</div><div class="mlbl">Placed</div></div><div class="metric"><div class="mval">'+r.sheets.length+'</div><div class="mlbl">Sheets</div></div><div class="metric"><div class="mval" style="font-size:14px">'+r.plate.w+'″×'+r.plate.h+'″</div><div class="mlbl">Plate</div></div></div>';
+      const _wtFmt=fmtWeight(r.plateWt);
+      html+='<div class="rbody"><div class="metrics" style="grid-template-columns:repeat(6,1fr)"><div class="metric"><div class="mval" style="font-size:16px;color:#85B7EB">'+_cutLenFmt+'</div><div class="mlbl">Linear Cut Length</div></div><div class="metric"><div class="mval" style="font-size:15px;color:'+vc+'">'+_cutTimeFmt+'</div><div class="mlbl">Est. Cut Time</div></div><div class="metric"><div class="mval" style="font-size:15px;color:#A78BFA">'+_wtFmt+'</div><div class="mlbl">Est. Plate Weight</div></div><div class="metric"><div class="mval">'+r.placeCount+'</div><div class="mlbl">Placed</div></div><div class="metric"><div class="mval">'+r.sheets.length+'</div><div class="mlbl">Sheets</div></div><div class="metric"><div class="mval" style="font-size:14px">'+r.plate.w+'″×'+r.plate.h+'″</div><div class="mlbl">Plate</div></div></div>';
       html+='<div class="pbar"><div class="pfill" style="width:'+r.util+'%;background:'+fc+'"></div></div>'+(r.unplaced?'<div class="alert aw" style="margin-bottom:12px"><span>&#9888;</span>'+r.unplaced+' part(s) exceed plate dimensions.</div>':'');
       html+='<div id="sh_'+ti+'_'+idx+'"></div></div></div>';
     });
@@ -1121,8 +1214,8 @@ function drawS(r,idx){
 }
 function doExport(){
   if(!LR){toast('Run nesting first');return;}
-  let rows=['Thickness,Plate,Sheets,Parts Placed,Total Parts,Linear Cut Length (in),Est Cut Time (min),Cut Rate (in/min)'];
-  LR.thkResults.forEach(tg=>tg.results.forEach(r=>rows.push(tg.thkLabel+',"'+r.plate.label+'",'+r.sheets.length+','+r.placeCount+','+r.total+','+(r.cutLen||0)+','+(r.cutMins||0)+','+(r.cutRate?r.cutRate.toFixed(3):0))));
+  let rows=['Group,Plate,Sheets,Parts Placed,Total Parts,Linear Cut Length (in),Est Cut Time (min),Cut Rate (in/min),Est Plate Weight (lbs)'];
+  LR.thkResults.forEach(tg=>tg.results.forEach(r=>rows.push(tg.thkLabel+',"'+r.plate.label+'",'+r.sheets.length+','+r.placeCount+','+r.total+','+(r.cutLen||0)+','+(r.cutMins||0)+','+(r.cutRate?r.cutRate.toFixed(3):0)+','+(r.plateWt||0))));
   rows.push('','Thickness,Sheet,Plate,Cutout_W_in,Cutout_H_in,Cutout_Area_sqin,Parts_on_sheet');
   LR.thkResults.forEach(tg=>tg.results.forEach(r=>r.sheets.forEach(sh=>{const co=sh.cutout||{w:0,h:0,area:0};rows.push(tg.thkLabel+','+sh.sheet+',"'+r.plate.label+'",'+co.w+','+co.h+','+co.area+','+sh.placed.length);})));
   rows.push('','Name,Type,Width_OD,Height_ID,Thk,Qty,Area_sqin');
@@ -1136,8 +1229,8 @@ function doSummary(){
   const lines=['TITAN METAL FABRICATORS','Waterjet Nesting Report','═'.repeat(36)];
   LR.thkResults.forEach(tg=>{
     const best=tg.results[0];
-    lines.push('','Thickness: '+tg.thkLabel+' — '+tg.parts.length+' part type(s), '+best.total+' pieces','─'.repeat(34));
-    lines.push('Best plate : '+best.plate.label,'Sheets     : '+best.sheets.length,'Cut length : '+(best.cutLen||0).toFixed(2)+'" ('+(best.cutLen?(best.cutLen/12).toFixed(2):0)+' ft)','Cut time   : '+fmtTime(best.cutMins),'Cut rate   : '+(best.cutRate?best.cutRate.toFixed(3):'—')+' in/min','Parts      : '+best.placeCount+' / '+best.total+' placed','','Cutout sizes:');
+    lines.push('',tg.thkLabel+' — '+tg.parts.length+' part type(s), '+best.total+' pieces','─'.repeat(34));
+    lines.push('Best plate : '+best.plate.label,'Sheets     : '+best.sheets.length,'Cut length : '+(best.cutLen||0).toFixed(2)+'" ('+(best.cutLen?(best.cutLen/12).toFixed(2):0)+' ft)','Cut time   : '+fmtTime(best.cutMins),'Cut rate   : '+(best.cutRate?best.cutRate.toFixed(3):'—')+' in/min','Plate wt   : '+fmtWeight(best.plateWt),'Parts      : '+best.placeCount+' / '+best.total+' placed','','Cutout sizes:');
     best.sheets.forEach(sh=>{if(sh.cutout)lines.push('  Sheet '+sh.sheet+': '+sh.cutout.w.toFixed(3)+'" × '+sh.cutout.h.toFixed(3)+'" ('+sh.cutout.area+' in²)');});
     lines.push('Parts:');
     tg.parts.forEach(p=>lines.push('  '+p.name+' ('+p.type+') '+p.w+'" '+(p.h?'OD × '+p.h+'" ID ':'')+'× '+p.qty+' pcs'));
