@@ -194,7 +194,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div class="divider-v"></div>
     <div>
       <div class="header-title">Plate Nesting Tool</div>
-      <div class="header-sub">96&Prime;&times;240&Prime; MASTER &nbsp;&middot;&nbsp; 39&Prime;&times;78&Prime; TA/NB &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 22 &nbsp;&middot;&nbsp; LAST EDITED: JUL 31, 2026</div>
+      <div class="header-sub">96&Prime;&times;240&Prime; MASTER &nbsp;&middot;&nbsp; 39&Prime;&times;78&Prime; TA/NB &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 24 &nbsp;&middot;&nbsp; LAST EDITED: JUL 31, 2026</div>
     </div>
   </div>
   <div class="flex" style="gap:10px">
@@ -215,7 +215,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
 <!-- PARTS -->
 <div class="pane on" id="pane-parts">
   <div class="card" style="padding:16px 20px;margin-bottom:14px">
-    <div class="sec" style="margin-bottom:12px">Job Reference <span style="font-size:10px;font-weight:400;color:var(--text3);letter-spacing:0">(optional)</span></div>
+    <div class="sec" style="margin-bottom:12px">Job Reference <span style="font-size:10px;font-weight:400;color:var(--red-text);letter-spacing:0">— required to use Bulk Import</span></div>
     <div class="fg fg2" style="margin-bottom:10px;gap:10px">
       <div>
         <div class="flabel">Entity</div>
@@ -254,28 +254,40 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div id="addWarn"></div>
   </div>
   <div class="card" style="padding:0;overflow:hidden;margin-bottom:14px"><div id="ptbl"></div></div>
-  <div class="card">
-    <div class="ctitle">&#9776;&ensp;Bulk Import via CSV</div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.8">
-      <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">Comma CSV</strong>&nbsp;
-      <code>Name, Qty, Material, Type, W_or_OD, H_or_ID_or_Length, Thk</code> &nbsp;— Types: rect &bull; cyl &bull; ring &bull; ringsect &bull; disc<br>
-      <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">Workbook paste</strong>&nbsp;
-      Copy &amp; paste rows directly — tab-separated columns auto-detected.<br>
-      <span style="color:var(--text3);font-size:11px">
-        Shape column mapping: &nbsp;
-        <code style="font-size:10px">Rect</code> = rectangle &nbsp;&bull;&nbsp;
-        <code style="font-size:10px">Cyl Fin, Cyl Rld</code> = cylinder &nbsp;&bull;&nbsp;
-        <code style="font-size:10px">Ring Cut, Ring Forg</code> = ring &nbsp;&bull;&nbsp;
-        <code style="font-size:10px">Ring Sect</code> = ring sect (segmented) &nbsp;&bull;&nbsp;
-        <code style="font-size:10px">Disc Plate, Disc Forg</code> = disc (solid round) &nbsp;&bull;&nbsp;
-        <code style="font-size:10px">Other</code> = &#9888; flagged
-      </span>
+  <div class="card" id="bulkImportCard">
+    <div class="ctitle">&#9776;&ensp;Bulk Import</div>
+    <div id="bulkEntityGate" style="display:none;padding:10px 14px;background:var(--amber-dim);border:0.5px solid rgba(186,117,23,0.3);border-radius:var(--radius);font-size:12px;color:var(--amber-text);margin-bottom:10px">
+      &#9888;&ensp;Select an entity (TITAN or RAM) in the <strong>Job Reference</strong> section above before using Bulk Import.
     </div>
-    <textarea id="csvIn" rows="5" placeholder="Comma: Flange A, 4, 316, ring, 12, 8, 0.500&#10;Comma: Base Plate, 2, CS, rect, 24, 18, 0.375&#10;&#10;Workbook paste:&#10;Support Repad&#9;2&#9;CS&#9;Rect&#9;lb&#9;14.661&#9;6.000&#9;0.500"></textarea>
-    <div id="csvWarn"></div>
-    <div class="fe" style="margin-top:10px">
-      <button class="btn btn-ghost btn-sm" onclick="clearAll()">Clear all</button>
-      <button class="btn btn-red btn-sm" onclick="loadCSV()">&#8679;&ensp;Import CSV</button>
+    <div id="bulkImportBody">
+      <div id="bulkTITANInstructions" style="display:none;font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.8">
+        <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">TITAN Workbook paste</strong>&nbsp;
+        Copy &amp; paste rows directly from the TITAN estimation sheet — tab-separated columns auto-detected.<br>
+        <span style="font-size:11px">
+          Shape column mapping: &nbsp;
+          <code style="font-size:10px">Rect</code> = rectangle &nbsp;&bull;&nbsp;
+          <code style="font-size:10px">Cyl Fin, Cyl Rld</code> = cylinder &nbsp;&bull;&nbsp;
+          <code style="font-size:10px">Ring Cut, Ring Forg</code> = ring &nbsp;&bull;&nbsp;
+          <code style="font-size:10px">Ring Sect</code> = ring sect (segmented) &nbsp;&bull;&nbsp;
+          <code style="font-size:10px">Disc Plate, Disc Forg</code> = disc (solid round)
+        </span>
+      </div>
+      <div id="bulkRAMInstructions" style="display:none;font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.8">
+        <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">RAM Workbook paste</strong>&nbsp;
+        Copy &amp; paste rows directly from the RAM estimation sheet (Name &rarr; Description &rarr; Qty).<br>
+        <span style="font-size:11px">
+          Description format: &nbsp;
+          <code style="font-size:10px">Thk X Dim1 X Dim2; Material</code> = rectangle &nbsp;&bull;&nbsp;
+          <code style="font-size:10px">Thk X OD X ID; Material</code> = ring &nbsp;&bull;&nbsp;
+          <code style="font-size:10px">Thk X OD; Material</code> = disc
+        </span>
+      </div>
+      <textarea id="csvIn" rows="5" placeholder="Select an entity above to enable Bulk Import…"></textarea>
+      <div id="csvWarn"></div>
+      <div class="fe" style="margin-top:10px">
+        <button class="btn btn-ghost btn-sm" onclick="clearAll()">Clear all</button>
+        <button class="btn btn-red btn-sm" onclick="loadCSV()">&#8679;&ensp;Import</button>
+      </div>
     </div>
   </div>
   <div class="runbar">
@@ -379,7 +391,7 @@ function go(p){
   document.getElementById('pane-'+p).classList.add('on');
   document.getElementById('nb-'+p).classList.add('on');
   if(p==='rfq') buildRfqPane();
-  if(p==='vendors') renderVendors();
+  if(p==='vendors') renderVendors();updateBulkImportUI();
 }function selT(t,el){CT=t;document.querySelectorAll('.tpill').forEach(b=>b.classList.remove('on'));el.classList.add('on');dynF();}
 function openOverlay(srcCanvas, label){
   const oc=document.getElementById('overlay-canvas');
@@ -487,6 +499,12 @@ function rp(){
 }
 function loadCSV(){
   const raw=document.getElementById('csvIn').value.trim();if(!raw)return;
+  if(!JOB_ENTITY){
+    const w=document.getElementById('csvWarn');
+    if(w)w.innerHTML='<div class="alert aw"><span>&#9888;</span>Please select an entity (TITAN or RAM) in the Job Reference section before importing.</div>';
+    return;
+  }
+  if(JOB_ENTITY==='RAM'){loadRAMCSV(raw);return;}
   let a=0,skipped=0;
 
   // Resolve workbook shape name → internal type + dimension rules
@@ -590,6 +608,94 @@ function loadCSV(){
   }
 }
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',2500);}
+// ── RAM estimation sheet parser ───────────────────────────────────────────
+// Columns (fixed, tab-separated): Name | Description | Qty
+// Description format: Thk X Dim1 [OD] [X Dim2 [ID]]; Material
+function loadRAMCSV(raw){
+  let added=0,skipped=0;
+  const flagged=[];
+
+  raw.split('\n').forEach(line=>{
+    if(!line.trim())return;
+    const cols=line.split('\t').map(s=>s.trim());
+    // Skip header rows (first cell looks like a label, not a part name)
+    if(cols.length<3)return;
+    const name=cols[0];
+    const desc=cols[1];
+    const qtyRaw=cols[2];
+    if(!name||!desc)return;
+
+    // Split description on ';' -> left = dims, right = material
+    const semi=desc.indexOf(';');
+    if(semi<0){flagged.push((name||'?')+': Missing semicolon delimiter in description — skipped');skipped++;return;}
+    const dimPart=desc.slice(0,semi).trim();
+    const mat=desc.slice(semi+1).trim().toUpperCase()
+                   .replace(/\s+/g,'');   // normalise e.g. " 304 " -> "304"
+
+    // Parse dimension tokens — strip all quote/inch marks, split on X (case-insensitive)
+    // Each token may have a suffix: OD, ID (case-insensitive)
+    const tokens=dimPart.replace(/[""″]/g,'').split(/\s*[xX]\s*/).map(t=>t.trim()).filter(Boolean);
+    // Token parser: {val:float, tag:'OD'|'ID'|''}
+    function parseToken(t){
+      const m=t.match(/^([\d.]+)\s*(OD|ID)?$/i);
+      if(!m)return null;
+      return{val:parseFloat(m[1]),tag:(m[2]||'').toUpperCase()};
+    }
+    const parsed=tokens.map(parseToken);
+    if(parsed.some(p=>!p)){
+      flagged.push((name||'?')+': Could not parse dimensions "'+dimPart+'" — skipped');
+      skipped++;return;
+    }
+
+    // Determine shape from token count and OD/ID tags:
+    //   1 token         -> unexpected, skip
+    //   2 tokens        -> Thk + OD  => disc
+    //   3 tokens, has ID-> Thk + OD + ID => ring
+    //   3 tokens, no ID -> Thk + Dim1 + Dim2 => rect
+    let type,w,h,thk,od_,id__;
+    if(parsed.length<2){flagged.push(name+': Too few dimension tokens — skipped');skipped++;return;}
+    thk=parsed[0].val;
+    if(parsed.length===2){
+      // disc: Thk X OD
+      const d1=parsed[1];
+      type='disc'; w=d1.val; h=d1.val;
+    } else {
+      const d1=parsed[1],d2=parsed[2];
+      const hasID=d2.tag==='ID'||d1.tag==='ID';
+      const hasOD=d2.tag==='OD'||d1.tag==='OD';
+      if(hasID||hasOD){
+        // ring: Thk X OD X ID
+        const odVal=d1.tag==='OD'||(!d1.tag&&!d2.tag)?d1.val:(d2.tag==='OD'?d2.val:d1.val);
+        const idVal=d2.tag==='ID'?d2.val:(d1.tag==='ID'?d1.val:d2.val);
+        type='ring'; w=odVal; h=idVal; od_=odVal; id__=idVal;
+      } else {
+        // rect: Thk X Dim1 X Dim2
+        type='rect'; w=d1.val; h=d2.val;
+      }
+    }
+    if(!thk){flagged.push(name+': Missing or zero thickness — skipped');skipped++;return;}
+
+    const qty=parseInt(qtyRaw)||1;
+    const pid=Date.now()+Math.random();
+    const _lim=plateLimitsFor(mat);
+    const _effH=(type==='ring'||type==='disc')?w:(h||0);
+    const _f0=w<=_lim.w&&_effH<=_lim.h,_f90=_effH<=_lim.w&&w<=_lim.h;
+    const _isOver=!_f0&&!_f90;
+    if(_isOver) flagged.push(name+': flat pattern '+w.toFixed(3)+'″ × '+_effH.toFixed(3)+'″ exceeds the '+_lim.w+'″×'+_lim.h+'″ max plate for '+(mat||'this material')+' — cannot be nested');
+    parts.push({id:pid,name,type,w,h,qty,thk,mat,oversize:_isOver,od:od_||undefined,id_:id__||undefined});
+    added++;
+  });
+
+  rp();document.getElementById('csvIn').value='';
+  const warn=document.getElementById('csvWarn');
+  let html='';
+  if(added) toast(added+' part'+(added!==1?'s':'')+' imported from RAM sheet'+(skipped?' ('+skipped+' skipped)':''));
+  if(flagged.length) html='<div class="alert aw" style="margin-top:8px"><span>&#9888;</span><div>'+flagged.map(f=>'<div>'+f+'</div>').join('')+'</div></div>';
+  else if(added) html='<div class="alert as" style="margin-top:8px"><span>&#10003;</span>'+added+' part'+(added!==1?'s':'')+' imported successfully.</div>';
+  if(warn)warn.innerHTML=html;
+  setTimeout(()=>{if(warn)warn.innerHTML='';},5000);
+}
+
 function toggleC(){const m=document.getElementById('cfgMode').value;document.getElementById('cfields').style.display=(m==='custom')?'block':'none';}
 // ── Cutting rate table: thickness (in) → rate (in/min) ──────────────────────
 const CUT_RATES=[
@@ -1241,6 +1347,28 @@ function selJE(val,el){
   ['TITAN','RAM'].forEach(v=>{const b=document.getElementById('je'+v);if(b)b.classList.remove('on');});
   if(JOB_ENTITY)el.classList.add('on');
   updateSubjectPreview();
+  updateBulkImportUI();
+}
+function updateBulkImportUI(){
+  const gate=document.getElementById('bulkEntityGate');
+  const body=document.getElementById('bulkImportBody');
+  const tInstr=document.getElementById('bulkTITANInstructions');
+  const rInstr=document.getElementById('bulkRAMInstructions');
+  const ta=document.getElementById('csvIn');
+  if(!gate||!body||!tInstr||!rInstr||!ta)return;
+  if(!JOB_ENTITY){
+    gate.style.display='block';
+    tInstr.style.display='none';rInstr.style.display='none';
+    ta.disabled=true;ta.placeholder='Select an entity above to enable Bulk Import…';
+  } else {
+    gate.style.display='none';
+    tInstr.style.display=JOB_ENTITY==='TITAN'?'block':'none';
+    rInstr.style.display=JOB_ENTITY==='RAM'?'block':'none';
+    ta.disabled=false;
+    ta.placeholder=JOB_ENTITY==='TITAN'
+      ?'Paste TITAN estimation rows here…'
+      :'Paste RAM estimation rows here (Name → Description → Qty)…';
+  }
 }
 function selJT(val,el){
   JOB_TYPE=JOB_TYPE===val?'':val;
@@ -1256,7 +1384,7 @@ function updateSubjectPreview(){
   const entity=JOB_ENTITY||'TITAN/RAM';
   const rtype=JOB_TYPE||'QUOTE/JOB';
   const rnum=ref.trim()||'[NUMBER]';
-  el.textContent='['+entity+'] ['+rtype+'] REF: '+rnum+' [MATERIAL] INQUIRY';
+  el.textContent=entity+' '+rtype+' REF: '+rnum;
 }
 
 function runNesting(){
