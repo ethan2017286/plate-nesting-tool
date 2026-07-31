@@ -9,7 +9,7 @@
 :root{
   --bg:#080808;--bg2:#111111;--bg3:#181818;--bg4:#222222;--bg5:#2a2a2a;
   --border:#252525;--border2:#333333;--border3:#3a3a3a;
-  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --text:#ffffff;--text2:#f2f2f2;--text3:#e0e0e0;
   --red:#9B1C31;--red2:#b52238;--red3:#cc2940;
   --red-dim:rgba(155,28,49,0.12);--red-border:rgba(155,28,49,0.4);--red-text:#f5a0ae;
   --green-text:#6fcf6f;--amber-text:#f5c842;
@@ -67,7 +67,7 @@ select option{background:var(--bg3);color:var(--text)}
 textarea{font-size:12px;font-family:"SF Mono","Fira Code",Consolas,monospace;resize:vertical;line-height:1.7}
 input[type=number]{-moz-appearance:textfield}
 input[type=number]::-webkit-inner-spin-button{opacity:0.4}
-::placeholder{color:var(--text3)}
+::placeholder{color:#666;opacity:1}
 
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:0.5px solid var(--border2);border-radius:var(--radius);background:transparent;color:var(--text);font-size:13px;font-family:inherit;cursor:pointer;transition:all 0.15s;letter-spacing:0.01em;white-space:nowrap;font-weight:400}
 .btn:hover{background:var(--bg4)}
@@ -107,10 +107,10 @@ tbody tr:hover td{background:var(--bg3)}
 .cfg-note{font-size:11px;color:var(--text3);margin-top:2px}
 .cfg-val input{width:100px;text-align:right}
 
-.stock-grid{display:flex;flex-wrap:wrap;gap:6px}
-.spill{padding:6px 14px;border:0.5px solid var(--border2);border-radius:var(--radius);font-size:12px;cursor:pointer;background:transparent;color:var(--text2);font-family:inherit;transition:all 0.15s}
-.spill:hover{border-color:var(--red);color:var(--text)}
-.spill.on{background:var(--red-dim);border-color:var(--red-border);color:var(--red-text);font-weight:500}
+
+
+
+
 
 .rcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:18px}
 .rcard.best{border-color:var(--red2)}
@@ -148,8 +148,38 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
 #overlay-close{position:absolute;top:16px;right:20px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text);border-radius:var(--radius);padding:6px 14px;font-size:13px;cursor:pointer;font-family:inherit}
 #overlay-close:hover{background:var(--bg4)}
 .canvas-wrap{position:relative;cursor:zoom-in}
-.zoom-hint{position:absolute;bottom:6px;right:8px;font-size:10px;color:rgba(255,255,255,0.35);pointer-events:none;letter-spacing:0.04em}
+.zoom-hint{position:absolute;bottom:8px;right:10px;font-size:10px;color:rgba(255,255,255,0.7);pointer-events:none;letter-spacing:0.04em;background:rgba(0,0,0,0.35);padding:2px 7px;border-radius:4px}
 #toast{position:fixed;bottom:28px;right:28px;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;letter-spacing:0.01em}
+
+/* RFQ styles */
+.rfq-group{margin-bottom:20px}
+.rfq-group-header{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.rfq-vendor-card{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:10px}
+.rfq-vendor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.rfq-vendor-name{font-size:14px;font-weight:500;color:var(--text)}
+.rfq-vendor-email{font-size:12px;color:var(--text2);margin-top:2px}
+.rfq-mat-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.rfq-mat-tag{font-size:10px;padding:2px 8px;border-radius:99px;background:var(--red-dim);border:0.5px solid var(--red-border);color:var(--red-text);font-weight:600;letter-spacing:0.04em}
+.rfq-items-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px}
+.rfq-items-table th{font-size:10px;font-weight:600;color:var(--text3);text-align:left;padding:6px 10px;border-bottom:0.5px solid var(--border);letter-spacing:0.06em;text-transform:uppercase}
+.rfq-items-table td{padding:7px 10px;border-bottom:0.5px solid var(--border);vertical-align:middle;color:var(--text)}
+.rfq-items-table tr:last-child td{border-bottom:none}
+.rfq-actions{display:flex;gap:8px;align-items:center}
+.rfq-preview-box{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:14px 16px;margin-top:12px;display:none;animation:fade 0.15s ease}
+.rfq-preview-field{font-size:12px;color:var(--text2);margin-bottom:6px;line-height:1.5}
+.rfq-preview-field strong{color:var(--text);font-weight:500}
+.rfq-preview-body{white-space:pre-wrap;font-size:12px;color:var(--text2);line-height:1.8;font-family:"SF Mono","Fira Code",Consolas,monospace;border-top:0.5px solid var(--border);margin-top:10px;padding-top:10px}
+.rfq-no-vendor{background:rgba(186,117,23,0.08);border:0.5px solid rgba(186,117,23,0.25);border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--amber-text);margin-bottom:10px}
+
+/* Vendor address book styles */
+.vendor-row-card{background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.vendor-row-info{flex:1;min-width:0}
+.vendor-row-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px}
+.vendor-row-contact{font-size:12px;color:var(--text2);margin-bottom:8px}
+.vendor-row-mats{display:flex;flex-wrap:wrap;gap:5px}
+.vmat-pill{font-size:10px;padding:2px 8px;border-radius:99px;background:var(--bg4);border:0.5px solid var(--border2);color:var(--text2);font-weight:500;cursor:pointer;transition:all 0.12s}
+.vmat-pill.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+.vmat-pill:hover{border-color:var(--red);color:var(--text)}
 </style>
 </head>
 <body>
@@ -164,7 +194,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div class="divider-v"></div>
     <div>
       <div class="header-title">Plate Nesting Tool</div>
-      <div class="header-sub">96&Prime;&nbsp;&times;&nbsp;240&Prime; MASTER PLATE &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 7 &nbsp;&middot;&nbsp; LAST EDITED: JUN 26, 2026</div>
+      <div class="header-sub">96&Prime;&times;240&Prime; MASTER &nbsp;&middot;&nbsp; 39&Prime;&times;78&Prime; TA/NB &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 22 &nbsp;&middot;&nbsp; LAST EDITED: JUL 31, 2026</div>
     </div>
   </div>
   <div class="flex" style="gap:10px">
@@ -178,10 +208,36 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
   <button class="nb" onclick="go('config')" id="nb-config"><span class="ni">&#9881;</span>Settings</button>
   <button class="nb" onclick="go('results')" id="nb-results"><span class="ni">&#9636;</span>Results</button>
   <button class="nb" onclick="go('export')" id="nb-export"><span class="ni">&#8659;</span>Export</button>
+  <button class="nb" onclick="go('rfq')" id="nb-rfq"><span class="ni">&#9993;</span>RFQ</button>
+  <button class="nb" onclick="go('vendors')" id="nb-vendors"><span class="ni">&#9786;</span>Vendors</button>
 </div>
 
 <!-- PARTS -->
 <div class="pane on" id="pane-parts">
+  <div class="card" style="padding:16px 20px;margin-bottom:14px">
+    <div class="sec" style="margin-bottom:12px">Job Reference <span style="font-size:10px;font-weight:400;color:var(--text3);letter-spacing:0">(optional)</span></div>
+    <div class="fg fg2" style="margin-bottom:10px;gap:10px">
+      <div>
+        <div class="flabel">Entity</div>
+        <div style="display:flex;gap:6px;margin-top:4px">
+          <button class="tpill" id="jeTITAN" onclick="selJE('TITAN',this)">TITAN</button>
+          <button class="tpill" id="jeRAM"   onclick="selJE('RAM',this)">RAM</button>
+        </div>
+      </div>
+      <div>
+        <div class="flabel">Ref Type</div>
+        <div style="display:flex;gap:6px;margin-top:4px">
+          <button class="tpill" id="jtQUOTE" onclick="selJT('QUOTE',this)">Quote</button>
+          <button class="tpill" id="jtJOB"   onclick="selJT('JOB',this)">Job</button>
+        </div>
+      </div>
+      <div style="flex:1;min-width:140px">
+        <div class="flabel">Reference #</div>
+        <input type="text" id="jobRef" placeholder="e.g. 12345" oninput="updateSubjectPreview()" style="margin-top:4px">
+      </div>
+    </div>
+    <div id="subjectPreview" style="font-size:11px;color:var(--text3);margin-top:2px;font-family:monospace;min-height:16px"></div>
+  </div>
   <div class="card" style="padding:16px 20px;margin-bottom:14px">
     <div class="sec" style="margin-bottom:10px">Part Type</div>
     <div class="type-bar" id="tbar" style="margin-bottom:16px;flex-wrap:wrap">
@@ -236,6 +292,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
       <div class="cfg-row"><div><div class="cfg-name">Kerf width</div><div class="cfg-note">Cut width in inches</div></div><div class="cfg-val"><input type="number" id="cfgK" value="0.040" step="0.005" min="0"></div></div>
       <div class="cfg-row"><div><div class="cfg-name">Part spacing</div><div class="cfg-note">Gap between parts</div></div><div class="cfg-val"><input type="number" id="cfgS" value="0.25" step="0.05" min="0"></div></div>
       <div class="cfg-row"><div><div class="cfg-name">Edge margin</div><div class="cfg-note">Border clearance</div></div><div class="cfg-val"><input type="number" id="cfgM" value="0.5" step="0.1" min="0"></div></div>
+      <div class="cfg-row"><div><div class="cfg-name">Min vendor drop</div><div class="cfg-note">Remnant strips thinner than this get charged to us</div></div><div class="cfg-val"><input type="number" id="cfgDrop" value="12" step="1" min="0"></div></div>
     </div>
     <div class="card">
       <div class="ctitle">&#9636;&ensp;Plate Mode</div>
@@ -243,9 +300,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
         <div class="flabel">Nesting mode</div>
         <select id="cfgMode" onchange="toggleC()">
           <option value="master">Master 96&Prime;&times;240&Prime; &rarr; cutout output</option>
-          <option value="std">Standard stock sizes</option>
           <option value="custom">Custom plate size</option>
-          <option value="both">Compare stock + custom</option>
         </select>
       </div>
       <div id="cfields" style="display:none">
@@ -256,17 +311,29 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="ctitle">&#9636;&ensp;Stock Plate Sizes</div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:12px">Toggle sizes to include when comparing stock plates.</div>
-    <div class="stock-grid" id="sgrid"></div>
-  </div>
 </div>
 
 <!-- RESULTS -->
 <div class="pane" id="pane-results">
   <div id="rinner">
     <div class="empty" style="padding:64px 0"><span class="eicon">&#9636;</span>No results yet.<br><span style="font-size:12px;margin-top:6px;display:block">Add parts and click &ldquo;Run Nesting&rdquo;</span></div>
+  </div>
+</div>
+
+<!-- RFQ -->
+<div class="pane" id="pane-rfq">
+  <div id="rfq-inner">
+    <div class="empty" style="padding:64px 0"><span class="eicon">&#9993;</span>No nesting results yet.<br><span style="font-size:12px;margin-top:6px;display:block">Run nesting first, then return here to generate RFQs.</span></div>
+  </div>
+</div>
+
+<!-- VENDORS -->
+<div class="pane" id="pane-vendors">
+  <div class="card">
+    <div class="ctitle">&#9786;&ensp;Vendor Address Book</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.6">Preferred material vendors matched during RFQ generation.</p>
+    <div id="vendor-list"></div>
+
   </div>
 </div>
 
@@ -289,26 +356,44 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
 
 <script>
 const MW=96,MH=240;
-const STOCK=[
-  {w:48,h:48,l:'48×48'},{w:48,h:96,l:'48×96'},{w:60,h:120,l:'60×120'},
-  {w:60,h:144,l:'60×144'},{w:72,h:144,l:'72×144'},{w:96,h:144,l:'96×144'},
-  {w:96,h:240,l:'96×240'}
-];
-let aStock=new Set([1,2,3,4,5,6]),parts=[],LR=null,CT='rect';
+// ── Material-specific master plate limits ────────────────────────────────────
+// Tantalum & Niobium masters are limited to 39″ × 78″ per mill standard.
+// All other materials use the full 96″ × 240″ master.
+const MAT_PLATE_LIMITS={'TA':{w:39,h:78},'NB':{w:39,h:78}};
+function plateLimitsFor(mat){
+  return MAT_PLATE_LIMITS[(mat||'').trim().toUpperCase()]||{w:MW,h:MH};
+}
+// Rotation-aware oversize check against the part's own material limits.
+// Circular parts (ring/disc) use OD for both dims.
+function isPartOversize(p){
+  const lim=plateLimitsFor(p.mat);
+  const bw=p.w, bh=(p.type==='ring'||p.type==='disc')?p.w:(p.h||0);
+  const fits0=bw<=lim.w&&bh<=lim.h, fits90=bh<=lim.w&&bw<=lim.h;
+  return !fits0&&!fits90;
+}
+let parts=[],LR=null,CT='rect';
 
 function go(p){
   document.querySelectorAll('.pane').forEach(e=>e.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(e=>e.classList.remove('on'));
   document.getElementById('pane-'+p).classList.add('on');
   document.getElementById('nb-'+p).classList.add('on');
-}
-function selT(t,el){CT=t;document.querySelectorAll('.tpill').forEach(b=>b.classList.remove('on'));el.classList.add('on');dynF();}
+  if(p==='rfq') buildRfqPane();
+  if(p==='vendors') renderVendors();
+}function selT(t,el){CT=t;document.querySelectorAll('.tpill').forEach(b=>b.classList.remove('on'));el.classList.add('on');dynF();}
 function openOverlay(srcCanvas, label){
   const oc=document.getElementById('overlay-canvas');
   const ol=document.getElementById('overlay-label');
-  // Copy the source canvas content into the overlay canvas at full resolution
   oc.width=srcCanvas.width;oc.height=srcCanvas.height;
   const ctx=oc.getContext('2d');ctx.drawImage(srcCanvas,0,0);
+  // Fit to viewport with correct aspect ratio
+  const vw=window.innerWidth-48,vh=window.innerHeight-100;
+  const aspect=srcCanvas.height/srcCanvas.width;
+  const dispW=Math.min(vw,vh/aspect);
+  oc.style.width=dispW+'px';
+  oc.style.height='auto';
+  oc.style.maxWidth='100%';
+  oc.style.borderRadius='8px';
   ol.textContent=label||'';
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -365,19 +450,21 @@ function addPart(){
     const rs=ringSectBBox(w,h,thk);
     pw=rs.w; ph=rs.h; od_store=w; id_store=h;
   }
-  // Warn if flat pattern exceeds master plate dimensions
-  const overW=pw>96, overH=ph>240;
-  if(overW||overH){
-    const msg=[];
-    if(overW) msg.push('flat width '+pw.toFixed(3)+'″ exceeds max plate width (96″)');
-    if(overH) msg.push('length '+ph.toFixed(3)+'″ exceeds max plate length (240″)');
+  // Warn if flat pattern exceeds the master plate for THIS material
+  // (TA/NB masters are 39″×78″; everything else 96″×240″). Rotation-aware.
+  const lim=plateLimitsFor(mat);
+  const effH=(CT==='ring'||CT==='disc')?pw:ph;
+  const _fits0=pw<=lim.w&&effH<=lim.h, _fits90=effH<=lim.w&&pw<=lim.h;
+  const isOver=!_fits0&&!_fits90;
+  if(isOver){
     const warn=document.getElementById('addWarn');
-    if(warn) warn.innerHTML='<div style="margin-top:8px;padding:8px 12px;background:var(--amber-dim);border:0.5px solid rgba(186,117,23,0.3);border-radius:var(--radius);font-size:12px;color:var(--amber-text)"><strong>&#9888; '+n+':</strong> '+msg.join(' and ')+' — part cannot be nested on a standard plate and will be flagged.</div>';
+    const limNote=(lim.w!==MW||lim.h!==MH)?' ('+mat+' master is limited to '+lim.w+'″×'+lim.h+'″)':'';
+    if(warn) warn.innerHTML='<div style="margin-top:8px;padding:8px 12px;background:var(--amber-dim);border:0.5px solid rgba(186,117,23,0.3);border-radius:var(--radius);font-size:12px;color:var(--amber-text)"><strong>&#9888; '+n+':</strong> flat pattern '+pw.toFixed(3)+'″ × '+effH.toFixed(3)+'″ exceeds the '+lim.w+'″ × '+lim.h+'″ max plate for '+mat+limNote+' — part cannot be nested and will be flagged.</div>';
   } else {
     const warn=document.getElementById('addWarn');
     if(warn) warn.innerHTML='';
   }
-  parts.push({id:Date.now()+Math.random(),name:n,type:CT,w:pw,h:ph,qty:q,thk,mat,od:CT==='cyl'?w:undefined,oversize:(overW||overH)});
+  parts.push({id:Date.now()+Math.random(),name:n,type:CT,w:pw,h:ph,qty:q,thk,mat,od:CT==='cyl'?w:undefined,oversize:isOver});
   rp();
   document.getElementById('fN').value='';document.getElementById('fQ').value='1';
   if(mE)mE.value='';if(wE)wE.value='';if(hE)hE.value='';if(tE)tE.value='';document.getElementById('fN').focus();
@@ -475,15 +562,15 @@ function loadCSV(){
     if(s.type==='skip'){if(s.flag)flagged.push(n+': '+s.flag);skipped++;return;}
     if(!thk){flagged.push(n+': Missing thickness — part skipped');skipped++;return;}
     const pid=Date.now()+Math.random();
-    // Check flat pattern dimensions against master plate limits
-    const _overW=s.w>96, _overH=s.h>240;
-    if(_overW||_overH){
-      const _msgs=[];
-      if(_overW) _msgs.push('flat width '+s.w.toFixed(3)+'″ exceeds max plate width (96″)');
-      if(_overH) _msgs.push('length '+s.h.toFixed(3)+'″ exceeds max plate length (240″)');
-      flagged.push(n+': '+_msgs.join(' and ')+' — cannot be nested on a standard plate');
+    // Check flat pattern against THIS material's master plate limits (rotation-aware)
+    const _lim=plateLimitsFor(mat);
+    const _effH=(s.type==='ring'||s.type==='disc')?s.w:(s.h||0);
+    const _f0=s.w<=_lim.w&&_effH<=_lim.h, _f90=_effH<=_lim.w&&s.w<=_lim.h;
+    const _isOver=!_f0&&!_f90;
+    if(_isOver){
+      flagged.push(n+': flat pattern '+s.w.toFixed(3)+'″ × '+_effH.toFixed(3)+'″ exceeds the '+_lim.w+'″×'+_lim.h+'″ max plate for '+(mat||'this material')+' — cannot be nested');
     }
-    parts.push({id:pid,name:n,type:s.type,w:s.w,h:s.h,qty:parseInt(q)||1,thk,mat:mat||'',oversize:(_overW||_overH),od:s.od||undefined,id_:s.id_||undefined});
+    parts.push({id:pid,name:n,type:s.type,w:s.w,h:s.h,qty:parseInt(q)||1,thk,mat:mat||'',oversize:_isOver,od:s.od||undefined,id_:s.id_||undefined});
     if(s.flag) flagged.push(n+': '+s.flag);
     a++;
   });
@@ -503,9 +590,7 @@ function loadCSV(){
   }
 }
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',2500);}
-function toggleC(){const m=document.getElementById('cfgMode').value;document.getElementById('cfields').style.display=(m==='custom'||m==='both')?'block':'none';}
-function buildStock(){document.getElementById('sgrid').innerHTML=STOCK.map((s,i)=>'<button class="spill '+(aStock.has(i)?'on':'')+'" onclick="togS('+i+',this)">'+s.l+'″</button>').join('');}
-function togS(i,el){aStock.has(i)?aStock.delete(i):aStock.add(i);el.classList.toggle('on');}
+function toggleC(){const m=document.getElementById('cfgMode').value;document.getElementById('cfields').style.display=(m==='custom')?'block':'none';}
 // ── Cutting rate table: thickness (in) → rate (in/min) ──────────────────────
 const CUT_RATES=[
   [0.0625,20],[0.125,12.5],[0.1875,10],[0.25,8],[0.3125,6.5],[0.375,5],
@@ -924,8 +1009,66 @@ function shelfPack(items,zw,zh,ox,oy,kerf,spacing){
   }
   return placed;
 }
+// ── Cutout candidate scoring ─────────────────────────────────────────────────
+// Reads Min Vendor Drop from settings (default 12″). A cutout that leaves the
+// vendor a remnant strip thinner than this — in width OR length — is scored as
+// if the strip were purchased too (that's what actually happens on the invoice).
+function getMinVendorDrop(){
+  const el=document.getElementById('cfgDrop');
+  const v=el?parseFloat(el.value):NaN;
+  return (v&&v>0)?v:12;
+}
+
+// Returns {n, cost, area, aspect} for a candidate placement
+//   n      = parts placed (more is better — hard priority)
+//   cost   = estimated charged area, in², using snapped dims + drop penalty
+//   area   = snapped cutout area (tie-break)
+//   aspect = long/short ratio (final tie-break — prefer squarer)
+function scoreCutout(placed,margin,pw,ph){
+  if(!placed||!placed.length) return {n:0,cpp:Infinity,cost:Infinity,area:Infinity,aspect:Infinity};
+  const co=cutout(placed,margin);
+  const W=Math.min(pw,Math.ceil(co.w)), L=Math.min(ph,Math.ceil(co.h));
+  const drop=getMinVendorDrop();
+  let effW=W, effL=L;
+  if(pw-W>0 && pw-W<drop) effW=pw;
+  if(ph-L>0 && ph-L<drop) effL=ph;
+  return {
+    n:placed.length,
+    cpp:(effW*effL)/Math.max(1,placed.length),
+    cost:effW*effL,
+    area:W*L,
+    aspect:Math.max(W,L)/Math.max(1,Math.min(W,L))
+  };
+}
+
+// True if score a beats score b.
+// Cost/area compare with a 2% relative tolerance: shapes within 2% of each
+// other are "equal" on material, so the squarer (vendor-friendlier) shape
+// wins. Real savings beyond 2% always take priority — per shop policy,
+// smallest charged area wins genuine conflicts.
+function betterCutoutScore(a,b){
+  if(a.n!==b.n) return a.n>b.n;                        // place more parts first
+  const tol=c=>Math.max(1,c*0.02);
+  if(Math.abs(a.cost-b.cost)>tol(Math.min(a.cost,b.cost))) return a.cost<b.cost;
+  if(Math.abs(a.area-b.area)>tol(Math.min(a.area,b.area))) return a.area<b.area;
+  return a.aspect<b.aspect;                            // then squarest shape
+}
+
+// True if score a beats score b on MATERIAL EFFICIENCY (charged area per part).
+// Used by sweep mode 2. Cramming more parts onto one sheet is only worth it if
+// the cutout doesn't grow faster than the part count — this comparator captures
+// that, where betterCutoutScore (which ranks part count first) does not.
+function betterEfficiencyScore(a,b){
+  if(!a.n) return false;
+  if(!b.n) return true;
+  const tol=v=>Math.max(1,v*0.02);
+  if(Math.abs(a.cpp-b.cpp)>tol(Math.min(a.cpp,b.cpp))) return a.cpp<b.cpp;
+  if(a.n!==b.n) return a.n>b.n;            // near-equal efficiency → fill the sheet
+  return a.aspect<b.aspect;
+}
+
 // ── One full sheet: oversized handling + ring drops + width-first shelf pack ──
-function nestSheet(items,pw,ph,kerf,spacing,margin){
+function nestSheet(items,pw,ph,kerf,spacing,margin,sweepMode){
   const gap=spacing+kerf;
   const uw=pw-2*margin, uh=ph-2*margin;
 
@@ -979,9 +1122,92 @@ function nestSheet(items,pw,ph,kerf,spacing,margin){
     return placed;
   }
 
-  // Normal path: ring drops + width-first shelf pack with rotation
+  // Normal path: ring drops + cutout-shape-optimized packing
   const{hostItems,dropMap}=assignRingDrops(normal,spacing,kerf);
-  const mainPlaced=shelfPack(hostItems,uw,uh,margin,margin,kerf,spacing);
+
+  // ── Cutout shape sweep ──────────────────────────────────────────────────
+  // Rather than accepting whatever bounding box falls out of a single greedy
+  // pack, re-pack the same items inside many candidate zone shapes and keep
+  // the cheapest. Two families of candidate are tried:
+  //   LENGTH-capped  — short zones force columns to wrap sideways
+  //   WIDTH-capped   — narrow zones force rows to stack downward
+  // Candidates are derived from actual part geometry (k parts of dimension d
+  // stacked = k*(d+gap)-gap) plus a coarse safety-net sweep, because deriving
+  // them from the baseline bounding box alone skips the good answers.
+  // Each candidate is scored by ESTIMATED CHARGED AREA:
+  //   - cutout dims snapped UP to next whole inch (what you'd actually order)
+  //   - if the remnant left for the vendor (plate minus cutout) is a strip
+  //     narrower than MIN_VENDOR_DROP in either axis, assume we get charged
+  //     for that strip too (effective dim rounds up to full plate dim)
+  // The unconstrained pack is always a candidate, so a sweep can never
+  // return a worse result than packing once.
+  const basePlaced=shelfPack(hostItems,uw,uh,margin,margin,kerf,spacing);
+  let bestPack={placed:basePlaced,score:scoreCutout(basePlaced,margin,pw,ph)};
+  const _mode=sweepMode||0;   // 0 = none, 1 = fill-first, 2 = efficiency-first
+  if(_mode>0&&hostItems.length>1){
+    // Distinct part dimensions (both orientations) drive candidate generation
+    const dims=new Set();
+    hostItems.forEach(p=>{const bb=bbox(p);
+      dims.add(Math.round(bb.w*100)/100);dims.add(Math.round(bb.h*100)/100);});
+    // Smallest zone that can still hold every part: a part may rotate so its
+    // shorter side runs along the constrained axis
+    const minDim=Math.max(...hostItems.map(p=>{const bb=bbox(p);return Math.min(bb.w,bb.h);}));
+
+    function buildCands(limit){
+      const s=new Set();
+      dims.forEach(d=>{
+        const step=d+gap;
+        if(step<=0) return;
+        const kMax=Math.min(40,Math.floor(limit/step)+1);
+        for(let k=1;k<=kMax;k++){
+          const v=Math.ceil(k*step-gap);
+          if(v>=minDim&&v<limit) s.add(v);
+        }
+      });
+      for(let v=Math.ceil(minDim);v<limit;v+=5) s.add(v);
+      return s;
+    }
+    // Fold in the legacy candidate family (baseline bounding box divided by k).
+    // Keeping these makes the search space a strict superset of the previous
+    // algorithm's, so a sweep can never do worse than it used to.
+    function addLegacy(s,base,limit){
+      if(!base) return;
+      for(let k=2;k<=8;k++){
+        const v=Math.ceil(base/k);
+        if(v>=minDim&&v<limit){
+          s.add(v);
+          const v2=Math.min(Math.floor(limit),Math.ceil(v*1.15));
+          if(v2>v) s.add(v2);
+        }
+      }
+    }
+
+    const MAX_PACKS=160;
+    let budget=MAX_PACKS;
+    const baseCo=cutout(basePlaced,margin);
+    const lenSet=buildCands(uh), widSet=buildCands(uw);
+    if(baseCo){addLegacy(lenSet,baseCo.h,uh);addLegacy(widSet,baseCo.w,uw);}
+    const lenCands=[...lenSet].sort((a,b)=>a-b), widCands=[...widSet].sort((a,b)=>a-b);
+    // Interleave so both families get search budget on large part lists
+    const queue=[];
+    const nq=Math.max(lenCands.length,widCands.length);
+    for(let i=0;i<nq;i++){
+      if(i<lenCands.length) queue.push({axis:'L',v:lenCands[i]});
+      if(i<widCands.length) queue.push({axis:'W',v:widCands[i]});
+    }
+    for(const q of queue){
+      if(budget--<=0) break;
+      const pl=(q.axis==='L')
+        ? shelfPack(hostItems,uw,q.v,margin,margin,kerf,spacing)
+        : shelfPack(hostItems,q.v,uh,margin,margin,kerf,spacing);
+      if(!pl.length) continue;
+      const sc=scoreCutout(pl,margin,pw,ph);
+      const wins=(_mode===2)?betterEfficiencyScore(sc,bestPack.score)
+                            :betterCutoutScore(sc,bestPack.score);
+      if(wins) bestPack={placed:pl,score:sc};
+    }
+  }
+  const mainPlaced=bestPack.placed;
 
   const dropPlaced=[];
   for(const host of mainPlaced){
@@ -1003,7 +1229,34 @@ function cutout(placed,margin){
   let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;
   placed.forEach(p=>{x0=Math.min(x0,p.px);y0=Math.min(y0,p.py);x1=Math.max(x1,p.px+p.bw);y1=Math.max(y1,p.py+p.bh);});
   const w=parseFloat((x1-x0+margin*2).toFixed(3)),h=parseFloat((y1-y0+margin*2).toFixed(3));
-  return{w,h,area:parseFloat((w*h).toFixed(2)),x0,y0};
+  // Order dims: snapped up to next whole inch — what actually goes on the RFQ
+  const oW=Math.ceil(w-0.0001),oH=Math.ceil(h-0.0001);
+  return{w,h,area:parseFloat((w*h).toFixed(2)),x0,y0,orderW:oW,orderH:oH,orderArea:oW*oH};
+}
+
+// ── Job reference state ──────────────────────────────────────────────────────────────
+let JOB_ENTITY='',JOB_TYPE='';
+function selJE(val,el){
+  JOB_ENTITY=JOB_ENTITY===val?'':val;
+  ['TITAN','RAM'].forEach(v=>{const b=document.getElementById('je'+v);if(b)b.classList.remove('on');});
+  if(JOB_ENTITY)el.classList.add('on');
+  updateSubjectPreview();
+}
+function selJT(val,el){
+  JOB_TYPE=JOB_TYPE===val?'':val;
+  ['QUOTE','JOB'].forEach(v=>{const b=document.getElementById('jt'+v);if(b)b.classList.remove('on');});
+  if(JOB_TYPE)el.classList.add('on');
+  updateSubjectPreview();
+}
+function updateSubjectPreview(){
+  const el=document.getElementById('subjectPreview');
+  if(!el)return;
+  const ref=(document.getElementById('jobRef')||{}).value||'';
+  if(!JOB_ENTITY&&!JOB_TYPE&&!ref.trim()){el.textContent='';return;}
+  const entity=JOB_ENTITY||'TITAN/RAM';
+  const rtype=JOB_TYPE||'QUOTE/JOB';
+  const rnum=ref.trim()||'[NUMBER]';
+  el.textContent='['+entity+'] ['+rtype+'] REF: '+rnum+' [MATERIAL] INQUIRY';
 }
 
 function runNesting(){
@@ -1013,7 +1266,7 @@ function runNesting(){
   const missingThk=parts.filter(p=>!p.thk||p.thk<=0);
   if(missingThk.length){toast(missingThk.length+' part'+(missingThk.length!==1?'s':'')+' missing thickness — check parts list');go('parts');return;}
   // Warn about parts that exceed plate dimensions — they will be skipped in nesting
-  const oversizeParts=parts.filter(p=>p.oversize||(p.w>96||p.h>240));
+  const oversizeParts=parts.filter(p=>p.oversize||isPartOversize(p));
   if(oversizeParts.length){
     const names=oversizeParts.map(p=>p.name).join(', ');
     toast('⚠ '+oversizeParts.length+' part'+(oversizeParts.length!==1?'s':'')+' exceed plate dimensions and will be skipped: '+names);
@@ -1024,11 +1277,18 @@ function runNesting(){
   const mode=document.getElementById('cfgMode').value;
   const cW=Math.min(MW,parseFloat(document.getElementById('cfgCW').value)||96);
   const cH=Math.min(MH,parseFloat(document.getElementById('cfgCH').value)||120);
-  let cands=[];
-  if(mode==='master')cands=[{w:96,h:240,label:'Master 96″×240″'}];
-  else if(mode==='custom'||mode==='both')cands.push({w:cW,h:cH,label:'Custom '+cW+'″×'+cH+'″'});
-  if(mode==='std'||mode==='both')[...aStock].sort((a,b)=>a-b).forEach(i=>cands.push({...STOCK[i],label:'Stock '+STOCK[i].l+'″'}));
-  if(!cands.length)cands=[{w:96,h:240,label:'Master 96″×240″'}];
+  // Plate candidates are material-dependent: TA/NB masters cap at 39″×78″,
+  // custom sizes are clamped, and stock sizes that don't fit are excluded.
+  function candsForMat(mat){
+    const lim=plateLimitsFor(mat);
+    const limited=lim.w<MW||lim.h<MH;
+    const masterLabel=limited?('Master '+lim.w+'″×'+lim.h+'″ ('+(mat||'').trim()+' max)'):'Master 96″×240″';
+    if(mode==='custom'){
+      const w2=Math.min(cW,lim.w),h2=Math.min(cH,lim.h);
+      return [{w:w2,h:h2,label:'Custom '+w2+'″×'+h2+'″'+((w2<cW||h2<cH)?' (clamped for '+(mat||'').trim()+')':'')}];
+    }
+    return [{w:lim.w,h:lim.h,label:masterLabel}];
+  }
   // Group parts by Material + Thickness — each unique combo = separate nest
   const matThkMap={};
   parts.forEach(p=>{
@@ -1045,23 +1305,60 @@ function runNesting(){
     const tP=exp.length;
     const tA=grpParts.reduce((s,p)=>s+area(p)*p.qty,0);
     const results=[];
-    for(const plate of cands){
-      let rem=[...exp];const sheets=[];let g=0;
-      while(rem.length&&g<200){
-        g++;
-        const pl=nestSheet(rem,plate.w,plate.h,kerf,spacing,margin);
-        if(!pl.length){
-          // nestSheet returned empty — the front item exceeds the full plate, truly unplaceable
-          // Skip it to avoid infinite loop and mark as unplaceable
-          const bb=bbox(rem[0]);
-          if(bb.w>plate.w||bb.h>plate.h){ rem.shift(); g=Math.max(0,g-1); }
-          else break;
-          continue;
+    const plateCands=candsForMat(grpParts[0]&&grpParts[0].mat||'');
+    for(const plate of plateCands){
+      // Pack the whole job twice — once with the per-sheet cutout sweep and
+      // once without — then keep whichever costs less ACROSS ALL SHEETS.
+      // The sweep optimises each sheet in isolation, so a cheaper sheet 1 can
+      // leave a worse remainder for sheet 2. Comparing job totals means the
+      // sweep can only ever help.
+      function runJob(mode){
+        let rem=[...exp];const sheets=[];let g=0;
+        while(rem.length&&g<200){
+          g++;
+          const pl=nestSheet(rem,plate.w,plate.h,kerf,spacing,margin,mode);
+          if(!pl.length){
+            // nestSheet returned empty — the front item exceeds the full plate,
+            // truly unplaceable. Skip it to avoid an infinite loop.
+            const bb=bbox(rem[0]);
+            if(bb.w>plate.w||bb.h>plate.h){ rem.shift(); g=Math.max(0,g-1); }
+            else break;
+            continue;
+          }
+          sheets.push({sheet:sheets.length+1,placed:pl,cutout:cutout(pl,margin)});
+          const ids=new Set(pl.map(p=>p.iid));
+          rem=rem.filter(p=>!ids.has(p.iid));
         }
-        sheets.push({sheet:sheets.length+1,placed:pl,cutout:cutout(pl,margin)});
-        const ids=new Set(pl.map(p=>p.iid));
-        rem=rem.filter(p=>!ids.has(p.iid));
+        return {sheets,rem};
       }
+      // Total estimated charged area for a set of sheets (same model as scoreCutout)
+      function jobCost(shs){
+        const drop=getMinVendorDrop();
+        let tot=0;
+        shs.forEach(sh=>{
+          const co=sh.cutout; if(!co) return;
+          const W=Math.min(plate.w,co.orderW||Math.ceil(co.w));
+          const L=Math.min(plate.h,co.orderH||Math.ceil(co.h));
+          let eW=W,eL=L;
+          if(plate.w-W>0&&plate.w-W<drop) eW=plate.w;
+          if(plate.h-L>0&&plate.h-L<drop) eL=plate.h;
+          tot+=eW*eL;
+        });
+        return tot;
+      }
+      // Three whole-job strategies, cheapest total wins. Comparing true job
+      // totals (not per-sheet scores) is what makes the sweep safe: a candidate
+      // that looks good on one sheet but strands an expensive remainder loses.
+      const strategies=[runJob(0),runJob(1),runJob(2)];
+      let chosen=strategies[0], chosenCost=jobCost(strategies[0].sheets);
+      for(let si=1;si<strategies.length;si++){
+        const s=strategies[si], sc2=jobCost(s.sheets);
+        if(s.rem.length<chosen.rem.length
+           ||(s.rem.length===chosen.rem.length&&sc2<chosenCost-0.001)){
+          chosen=s; chosenCost=sc2;
+        }
+      }
+      const sheets=chosen.sheets; const rem=chosen.rem;
       const placed=sheets.reduce((s,sh)=>s+sh.placed.length,0);
       const util=sheets.length?Math.round((tA/(plate.w*plate.h*sheets.length))*100):0;
       const _cutLen=parseFloat(totalCutLength(sheets).toFixed(2));
@@ -1092,14 +1389,13 @@ function renderR(thkResults){
     const best=tg.results[0];
     html+='<div style="margin-bottom:8px;padding:10px 14px;background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--radius-lg)">';
     html+='<div style="font-size:12px;font-weight:600;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">'+tg.thkLabel+' &mdash; '+tg.parts.length+' part type'+(tg.parts.length!==1?'s':'')+', '+tg.results[0].total+' pieces</div>';
-    const _oversized=tg.parts.filter(p=>p.oversize||(p.w>96||p.h>240));
+    const _oversized=tg.parts.filter(p=>p.oversize||isPartOversize(p));
     if(_oversized.length){
-      html+='<div class="alert aw" style="margin-bottom:10px;padding:8px 12px"><span>&#9888;</span><div><strong>'+_oversized.length+' part'+(oversized!==1?'s':'')+' cannot be nested</strong> — ';
+      html+='<div class="alert aw" style="margin-bottom:10px;padding:8px 12px"><span>&#9888;</span><div><strong>'+_oversized.length+' part'+(_oversized.length!==1?'s':'')+' cannot be nested</strong> — ';
       html+=_oversized.map(p=>{
-        const issues=[];
-        if(p.w>96) issues.push('flat width '+p.w.toFixed(3)+'″ exceeds 96″ max');
-        if(p.h>240) issues.push('length '+p.h.toFixed(3)+'″ exceeds 240″ max');
-        return p.name+': '+issues.join(', ');
+        const lim=plateLimitsFor(p.mat);
+        const bh=(p.type==='ring'||p.type==='disc')?p.w:(p.h||0);
+        return p.name+': '+p.w.toFixed(3)+'″ × '+bh.toFixed(3)+'″ exceeds '+lim.w+'″×'+lim.h+'″ max for '+(p.mat||'material');
       }).join(' &bull; ')+'</div></div>';
     }
     html+='<div class="alert as" style="margin-bottom:10px;padding:8px 12px"><span>&#10003;</span><div>Best: <strong>'+best.plate.label+'</strong> &mdash; '+best.util+'% util &nbsp;&middot;&nbsp; '+best.sheets.length+' sheet'+(best.sheets.length!==1?'s':'')+' &nbsp;&middot;&nbsp; '+best.placeCount+'/'+best.total+' placed</div></div>';
@@ -1124,52 +1420,97 @@ function drawS(r,idx){
   const wrap=document.getElementById('sh_'+idx);
   const FILLS=['#B5D4F4','#9FE1CB','#FAC775','#CED4F6','#85B7EB','#C0DD97','#F4C0D1','#B5EAD7','#E2F0CB','#F0997B'];
   r.sheets.forEach(sh=>{
-    const mW=580,scale=Math.min(mW/r.plate.w,200/r.plate.h);
-    const cw=Math.round(r.plate.w*scale),ch=Math.round(r.plate.h*scale);
+    // Thumbnail: compact preview, fixed 120px tall, correct aspect ratio.
+    // Full-resolution canvas is drawn at 700px wide (stored for the overlay).
+    const mW=700,maxH=Math.round(mW*(r.plate.h/r.plate.w));
+    const scale=mW/r.plate.w;
+    const cw=mW,ch=maxH;
+    const THUMB_H=120; // rendered display height in px
     const d=document.createElement('div');d.style.marginTop='16px';
     const lbl=document.createElement('div');lbl.className='slbl';
-    lbl.innerHTML='<span>Sheet '+sh.sheet+' of '+r.sheets.length+' &nbsp;·&nbsp; '+sh.placed.length+' part'+(sh.placed.length!==1?'s':'')+'</span>'+(sh.cutout?'<span style="color:var(--red-text)">&#9986; Cutout: '+sh.cutout.w.toFixed(3)+'″ × '+sh.cutout.h.toFixed(3)+'″</span>':'');
+    lbl.innerHTML='<span>Sheet '+sh.sheet+' of '+r.sheets.length+' &nbsp;·&nbsp; '+sh.placed.length+' part'+(sh.placed.length!==1?'s':'')+'</span>'+(sh.cutout?'<span style="color:var(--red-text)">&#9986; Order: '+(sh.cutout.orderW||Math.ceil(sh.cutout.w))+'″ × '+(sh.cutout.orderH||Math.ceil(sh.cutout.h))+'″</span>':'');
     d.appendChild(lbl);
-    const cvs=document.createElement('canvas');cvs.width=cw;cvs.height=ch;cvs.style.cssText='width:'+Math.min(cw,mW)+'px;height:auto;display:block;';
+    const cvs=document.createElement('canvas');cvs.width=cw;cvs.height=ch;
+    const thumbW=Math.round(THUMB_H*(cw/ch));
+    cvs.style.cssText='width:'+thumbW+'px;height:'+THUMB_H+'px;display:block;border-radius:4px;cursor:zoom-in;';
     const cwrap=document.createElement('div');
-    cwrap.style.cssText='position:relative;display:inline-block;cursor:zoom-in;';
+    cwrap.style.cssText='position:relative;display:inline-flex;align-items:flex-start;cursor:zoom-in;';
     const zhint=document.createElement('div');
-    zhint.style.cssText='position:absolute;bottom:6px;right:8px;font-size:10px;color:rgba(255,255,255,0.35);pointer-events:none;letter-spacing:0.04em;';
+    zhint.style.cssText='position:absolute;bottom:6px;right:8px;font-size:10px;color:rgba(255,255,255,0.85);pointer-events:none;letter-spacing:0.04em;';
     zhint.textContent='click to enlarge';
-    cwrap.appendChild(cvs);cwrap.appendChild(zhint);
+    // Scale bar in bottom-left corner
+    cwrap.appendChild(cvs);
+    const sbar=document.createElement('div');
+    const barIn=Math.min(24,Math.round(r.plate.w/4));
+    const thumbScale=THUMB_H/ch;
+    const barPx=Math.round(barIn*scale*thumbScale);
+    sbar.style.cssText='position:absolute;bottom:10px;left:10px;pointer-events:none;';
+    sbar.innerHTML='<div style="width:'+barPx+'px;height:3px;background:rgba(255,255,255,0.5);border-radius:2px;margin-bottom:3px"></div>'
+      +'<div style="font-size:9px;color:rgba(255,255,255,0.7);letter-spacing:0.05em">'+barIn+'″</div>';
+    cwrap.appendChild(sbar);
+    cwrap.appendChild(zhint);
     const _lbl=lbl;
     cwrap.addEventListener('click',function(){openOverlay(cvs,_lbl.textContent);});
     d.appendChild(cwrap);
     const ctx=cvs.getContext('2d');
     ctx.fillStyle='#0d0d0d';ctx.fillRect(0,0,cw,ch);
-    ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=0.5;
-    for(let gx=0;gx<cw;gx+=20){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,ch);ctx.stroke();}
-    for(let gy=0;gy<ch;gy+=20){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(cw,gy);ctx.stroke();}
+    // Grid lines at every 12 real inches (1 foot) — major; 6" minor
+    const inchPx=scale; // pixels per inch
+    const minorEvery=Math.max(1,Math.round(6)); // 6" minor grid
+    const majorEvery=Math.max(1,Math.round(12)); // 12" = 1 ft major grid
+    for(let i=0;i*inchPx<=cw;i++){
+      if(i%majorEvery===0){ctx.strokeStyle='rgba(255,255,255,0.10)';ctx.lineWidth=0.8;}
+      else if(i%minorEvery===0){ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=0.4;}
+      else continue;
+      ctx.beginPath();ctx.moveTo(i*inchPx,0);ctx.lineTo(i*inchPx,ch);ctx.stroke();
+    }
+    for(let i=0;i*inchPx<=ch;i++){
+      if(i%majorEvery===0){ctx.strokeStyle='rgba(255,255,255,0.10)';ctx.lineWidth=0.8;}
+      else if(i%minorEvery===0){ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=0.4;}
+      else continue;
+      ctx.beginPath();ctx.moveTo(0,i*inchPx);ctx.lineTo(cw,i*inchPx);ctx.stroke();
+    }
     if(sh.cutout){
-      const co=sh.cutout;ctx.save();ctx.strokeStyle='rgba(155,28,49,0.7)';ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
-      ctx.strokeRect((co.x0-LR.margin)*scale,(co.y0-LR.margin)*scale,co.w*scale,co.h*scale);ctx.restore();
+      const co=sh.cutout;ctx.save();
+      // Red fill tint on the cutout area
+      ctx.fillStyle='rgba(155,28,49,0.07)';
+      ctx.fillRect((co.x0-LR.margin)*scale,(co.y0-LR.margin)*scale,co.w*scale,co.h*scale);
+      ctx.strokeStyle='rgba(220,50,70,0.9)';ctx.lineWidth=2;ctx.setLineDash([6,4]);
+      ctx.strokeRect((co.x0-LR.margin)*scale,(co.y0-LR.margin)*scale,co.w*scale,co.h*scale);
+      ctx.restore();
     }
     // Draw rings first so nested parts render on top
-    const rings=sh.placed.filter(p=>p.type==='ring');
-    const others=sh.placed.filter(p=>p.type!=='ring');
+    const rings=sh.placed.filter(p=>p.type==='ring'||p.type==='disc');
+    const others=sh.placed.filter(p=>p.type!=='ring'&&p.type!=='disc');
     [...rings,...others].forEach((p,pi)=>{
       const fill=FILLS[sh.placed.indexOf(p)%FILLS.length];
       const x=p.px*scale,y=p.py*scale,w=p.bw*scale,h=p.bh*scale;
       ctx.setLineDash([]);
 
-      // Parts nested inside ring ID: brighter fill + dashed border to distinguish
+      // Parts nested inside ring ID: draw correctly by shape, not as a rectangle
       if(p.nestedInRing){
-        if(p.type==='disc'){
+        if(p.type==='ring'){
+          // Ring nested in ring: draw outer circle, punch inner hole
+          ctx.beginPath();ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);
+          ctx.fillStyle=fill+'55';ctx.fill();
+          ctx.setLineDash([3,2]);ctx.strokeStyle=fill;ctx.lineWidth=1.2;ctx.stroke();ctx.setLineDash([]);
+          if(p.h>0){
+            const ir2=(p.h/p.w)*(w/2);
+            ctx.beginPath();ctx.ellipse(x+w/2,y+h/2,ir2,ir2,0,0,Math.PI*2);
+            ctx.fillStyle='#0d0d0d';ctx.fill();ctx.strokeStyle=fill;ctx.lineWidth=0.8;ctx.stroke();
+          }
+        } else if(p.type==='disc'){
           ctx.beginPath();ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);
           ctx.fillStyle=fill+'55';ctx.fill();
           ctx.setLineDash([3,2]);ctx.strokeStyle=fill;ctx.lineWidth=1.2;ctx.stroke();ctx.setLineDash([]);
         } else {
-          ctx.fillStyle=fill+'45';ctx.fillRect(x,y,w,h);
+          // Rect nested in ring: draw as rect (it IS a rect, just inside the ring zone)
+          ctx.fillStyle=fill+'55';ctx.fillRect(x,y,w,h);
           ctx.setLineDash([3,2]);ctx.strokeStyle=fill;ctx.lineWidth=1.2;ctx.strokeRect(x,y,w,h);ctx.setLineDash([]);
         }
-        // "IN RING" micro-label overlay
+        // Label
         if(w>18&&h>10){
-          ctx.fillStyle='rgba(240,240,240,0.9)';
+          ctx.fillStyle='rgba(255,255,255,0.98)';
           ctx.font=(Math.max(8,Math.min(10,w/7)))+'px -apple-system,sans-serif';
           ctx.textAlign='center';ctx.textBaseline='middle';
           ctx.fillText(p.name.length>10?p.name.slice(0,9)+'…':p.name,x+w/2,y+h/2);
@@ -1202,11 +1543,38 @@ function drawS(r,idx){
           ctx.restore();
         }
       }
-      if(w>22&&h>12){ctx.fillStyle='rgba(240,240,240,0.75)';ctx.font=(Math.max(9,Math.min(11,w/6)))+'px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(p.name.length>10?p.name.slice(0,9)+'…':p.name,x+w/2,y+h/2);}
+      // Part label: show if there's space, scale font with box size
+      if(w>16&&h>10){
+        const fSize=Math.max(10,Math.min(14,Math.min(w/5,h/2.5)));
+        ctx.fillStyle='rgba(255,255,255,0.97)';
+        ctx.font='600 '+fSize+'px -apple-system,BlinkMacSystemFont,sans-serif';
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        // Two-line label: name on top, dims on bottom if room
+        const label=p.name.length>12?p.name.slice(0,11)+'…':p.name;
+        const dimLabel=p.bw.toFixed(1)+'″×'+p.bh.toFixed(1)+'″';
+        if(h>fSize*3){
+          ctx.fillText(label,x+w/2,y+h/2-fSize*0.6);
+          ctx.fillStyle='rgba(255,255,255,0.65)';
+          ctx.font=(fSize*0.8)+'px -apple-system,sans-serif';
+          ctx.fillText(dimLabel,x+w/2,y+h/2+fSize*0.8);
+        } else {
+          ctx.fillText(label,x+w/2,y+h/2);
+        }
+      }
     });
     if(sh.cutout){
       const co=sh.cutout;const panel=document.createElement('div');panel.className='cutout-panel';
-      panel.innerHTML='<div class="cion">&#9986;</div><div><div style="font-size:10px;color:var(--red-text);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px">Min. cutout — sheet '+sh.sheet+'</div><div class="cdim">'+co.w.toFixed(3)+'″ × '+co.h.toFixed(3)+'″</div><div class="cmeta">Width × Length &nbsp;·&nbsp; '+co.area.toLocaleString()+' in² &nbsp;·&nbsp; '+(co.area/144).toFixed(2)+' ft²</div></div>';
+      const oW=co.orderW||Math.ceil(co.w),oH=co.orderH||Math.ceil(co.h);
+      const dropMin=getMinVendorDrop();
+      const remW=r.plate.w-oW,remL=r.plate.h-oH;
+      let dropNote='';
+      if((remW>0&&remW<dropMin)||(remL>0&&remL<dropMin)){
+        const bits=[];
+        if(remW>0&&remW<dropMin)bits.push(remW+'″ wide');
+        if(remL>0&&remL<dropMin)bits.push(remL+'″ long');
+        dropNote='<div style="font-size:11px;color:var(--amber-text);margin-top:5px">&#9888; Leaves vendor a thin '+bits.join(' / ')+' strip (&lt;'+dropMin+'″) — likely charged. Consider rounding order to full plate dimension.</div>';
+      }
+      panel.innerHTML='<div class="cion">&#9986;</div><div><div style="font-size:10px;color:var(--red-text);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px">Order size — sheet '+sh.sheet+'</div><div class="cdim">'+oW+'″ × '+oH+'″</div><div class="cmeta">Width × Length &nbsp;·&nbsp; exact nest: '+co.w.toFixed(3)+'″ × '+co.h.toFixed(3)+'″ &nbsp;·&nbsp; '+(oW*oH).toLocaleString()+' in² &nbsp;·&nbsp; '+((oW*oH)/144).toFixed(2)+' ft²</div>'+dropNote+'</div>';
       d.appendChild(panel);
     }
     const hr=document.createElement('div');hr.className='hr';d.appendChild(hr);wrap.appendChild(d);
@@ -1216,8 +1584,8 @@ function doExport(){
   if(!LR){toast('Run nesting first');return;}
   let rows=['Group,Plate,Sheets,Parts Placed,Total Parts,Linear Cut Length (in),Est Cut Time (min),Cut Rate (in/min),Est Plate Weight (lbs)'];
   LR.thkResults.forEach(tg=>tg.results.forEach(r=>rows.push(tg.thkLabel+',"'+r.plate.label+'",'+r.sheets.length+','+r.placeCount+','+r.total+','+(r.cutLen||0)+','+(r.cutMins||0)+','+(r.cutRate?r.cutRate.toFixed(3):0)+','+(r.plateWt||0))));
-  rows.push('','Thickness,Sheet,Plate,Cutout_W_in,Cutout_H_in,Cutout_Area_sqin,Parts_on_sheet');
-  LR.thkResults.forEach(tg=>tg.results.forEach(r=>r.sheets.forEach(sh=>{const co=sh.cutout||{w:0,h:0,area:0};rows.push(tg.thkLabel+','+sh.sheet+',"'+r.plate.label+'",'+co.w+','+co.h+','+co.area+','+sh.placed.length);})));
+  rows.push('','Thickness,Sheet,Plate,Cutout_W_in,Cutout_H_in,Order_W_in,Order_H_in,Cutout_Area_sqin,Parts_on_sheet');
+  LR.thkResults.forEach(tg=>tg.results.forEach(r=>r.sheets.forEach(sh=>{const co=sh.cutout||{w:0,h:0,area:0,orderW:0,orderH:0};rows.push(tg.thkLabel+','+sh.sheet+',"'+r.plate.label+'",'+co.w+','+co.h+','+(co.orderW||0)+','+(co.orderH||0)+','+co.area+','+sh.placed.length);})));
   rows.push('','Name,Type,Width_OD,Height_ID,Thk,Qty,Area_sqin');
   LR.parts.forEach(p=>rows.push('"'+p.name+'",'+p.type+','+p.w+','+(p.h||0)+','+(p.thk||0)+','+p.qty+','+area(p).toFixed(3)));
   const blob=new Blob([rows.join('\n')],{type:'text/csv'});
@@ -1238,7 +1606,249 @@ function doSummary(){
   const txt=lines.join('\n');
   navigator.clipboard.writeText(txt).then(()=>{document.getElementById('emsg').innerHTML='<div class="alert as"><span>&#10003;</span>Summary copied to clipboard.</div>';document.getElementById('epre').textContent=txt;document.getElementById('epcard').style.display='block';});
 }
-dynF();rp();buildStock();
+dynF();rp();
+
+// ── ASME plate specification lookup ─────────────────────────────────────────
+const ASME_SPEC={
+  'A-20' :'SB-463 N08020',
+  'NI-200':'SB-162 N02200',
+  '304'  :'SA-240-304/L',
+  '310'  :'SA-240-310',
+  '316'  :'SA-240-316',
+  '321'  :'SA-240-321',
+  '400'  :'SA-127 N04400',
+  '600'  :'SB-168 N06600',
+  '625'  :'SB-443 N06625',
+  '800'  :'SB-409 N08800',
+  '825'  :'SB-424 N08825',
+  '2205' :'SA-240 S31803',
+  '2507' :'SA-240 S32750',
+  'C-22' :'SB-575 N06022',
+  'C-276':'SB-575 N10276',
+  'CS'   :'SA-516-70',
+  'NB'   :'B-393 R04210',
+  'PTFE' :null,
+  'TA'   :'B-521 R05252',
+  'TI-2' :'SB-265-2',
+  'TI-7' :'SB-265-7',
+  'TI-12':'SB-265-12',
+  'ZR'   :'SB-551 R60702'
+};
+function asmeSpec(mat){return ASME_SPEC[(mat||'').trim()]||null;}
+// Returns the full material description for an RFQ line:
+// e.g. "SA-240-304/L Plate" or "304 Plate" if no spec defined
+function matDesc(mat){const s=asmeSpec(mat);return s||mat;}
+
+// ── Vendor address book ──────────────────────────────────────────────────────
+const ALL_MATS=['A-20','NI-200','304','310','316','321','400','600','625','800','825','2205','2507','C-22','C-276','CS','NB','PTFE','TA','TI-2','TI-7','TI-12','ZR'];
+
+const DEFAULT_VENDORS=[
+  {id:1,name:'American Alloy Steel',contact:'RJ Flores',email:'rjf@aasteel.com',mats:['CS']},
+  {id:2,name:'Corrosion Materials',contact:'Tracie Nutt',email:'tnutt@corrosionmaterials.com',mats:['A-20','NI-200','C-22','400','C-276','625']},
+  {id:3,name:'CSTN',contact:'Leo Hu',email:'leohu@csnftn.cn',mats:['TA','NB']},
+  {id:4,name:'Sabre Alloys',contact:'Matt Keith',email:'mkeith@sabrealloys.com',mats:['304','316','321','2205','2507']},
+  {id:5,name:'Sandmeyer Steel Company',contact:'Shermin Mangat',email:'SMangat@SandmeyerSteel.com',mats:['304','316','2205','2507','400','600','625','800','825','C-276','NI-200','TI-2']},
+  {id:6,name:'SFI Gray Steel',contact:'SFI Gray Steel',email:'red@sfigray.com',mats:['CS','304','316']},
+  {id:7,name:'United Titanium',contact:'Nate Hoagland',email:'nate.hoagland@unitedtitanium.com',mats:['TI-2','TI-7','ZR']}
+];
+
+const _VER='v3';let vendors=(()=>{try{const d=JSON.parse(localStorage.getItem('titan_vendors_'+_VER));return d&&d.length?d:null;}catch(e){return null;}})();if(!vendors){vendors=DEFAULT_VENDORS.map(v=>({...v}));localStorage.setItem('titan_vendors_'+_VER,JSON.stringify(vendors));}
+
+function saveVendors(){localStorage.setItem('titan_vendors_'+_VER,JSON.stringify(vendors));}
+
+function renderVendors(){
+  const el=document.getElementById('vendor-list');
+  if(!vendors.length){el.innerHTML='<div class="empty" style="padding:32px 0"><span class="eicon" style="font-size:24px">&#9786;</span>No vendors configured.</div>';return;}
+  el.innerHTML=vendors.map(v=>`
+    <div class="vendor-row-card" id="vc_${v.id}">
+      <div class="vendor-row-info">
+        <div class="vendor-row-name">${v.name}</div>
+        <div class="vendor-row-contact">${v.contact}&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:var(--text3)">${v.email}</span></div>
+        <div class="vendor-row-mats">${v.mats.map(m=>`<span class="vmat-pill on">${m}</span>`).join('')}</div>
+      </div>
+      <button class="btn-del" onclick="removeVendor(${v.id})" title="Remove vendor">&#10005;</button>
+    </div>`).join('');
+}
+
+function removeVendor(id){
+  if(!confirm('Remove this vendor?'))return;
+  vendors=vendors.filter(v=>v.id!==id);
+  saveVendors();renderVendors();toast('Vendor removed');
+}
+
+
+// ── RFQ generation ───────────────────────────────────────────────────────────
+// Returns first name from a full name string
+function firstName(fullName){
+  if(!fullName)return'Team';
+  return fullName.trim().split(/\s+/)[0];
+}
+
+// Match a material to the best vendor(s) — returns array of matching vendor objects
+function vendorsForMat(mat){
+  return vendors.filter(v=>v.mats.includes(mat));
+}
+
+// Build HTML rows for the RFQ preview table
+function rfqTableRows(items){
+  let n=0, rows='';
+  items.forEach(function(item){
+    var thkC=item.thk.replace(/["″]/g,'').trim();
+    item.cutouts.forEach(function(co){
+      n++;
+      var nums=co.split(/[^0-9.]+/).filter(Boolean);
+      var W=nums[0]||'?', L=nums[1]||'?';
+      rows+='<tr><td style="color:var(--text3);width:32px">'+n+'</td>'
+           +'<td style="font-family:monospace;font-size:12px">QTY (1) '+W+'" X '+L+'" X '+thkC+'" THK; '+matDesc(item.mat)+'</td></tr>';
+    });
+  });
+  return rows;
+}
+
+// Build RFQ line items string from a list of nest result groups for one vendor.
+// Format: QTY (1) W" X L" X THK" THK; ASME-SPEC Plate
+function buildRfqBody(vendorContact, lineItems){
+  const lines=[];
+  lines.push('Hi '+firstName(vendorContact)+',');
+  lines.push('');
+  lines.push('Can you please provide a quote for the items below?');
+  lines.push('');
+  // Group cutouts under their ASME spec header — spec printed once per group,
+  // then bullet lines for each cutout size.
+  // Group key = spec string so matching specs across different thicknesses merge.
+  const groups=new Map();
+  lineItems.forEach(item=>{
+    const spec=matDesc(item.mat);
+    const thkClean=item.thk.replace(/["\u2033]/g,'').trim();
+    if(!groups.has(spec)) groups.set(spec,[]);
+    item.cutouts.forEach(co=>{
+      const nums=co.split(/[^0-9.]+/).filter(Boolean);
+      const W=nums[0]||'?', L=nums[1]||'?';
+      groups.get(spec).push('QTY (1) '+W+'" X '+L+'" X '+thkClean+'" THK');
+    });
+  });
+  let first=true;
+  groups.forEach((bullets,spec)=>{
+    if(!first) lines.push('');
+    first=false;
+    lines.push(spec);
+    bullets.forEach(b=>lines.push('  - '+b));
+  });
+  return lines.join('\n');
+}
+
+function buildRfqSubject(lineItems){
+  const mats=[...new Set(lineItems.map(i=>i.mat))];
+  const matLabel=mats.join('/');
+  const refNum=(document.getElementById('jobRef')||{}).value||'';
+  if(JOB_ENTITY&&JOB_TYPE&&refNum.trim()){
+    return JOB_ENTITY+' '+JOB_TYPE+' REF: '+refNum.trim()+' '+matLabel+' Inquiry';
+  }
+  return '[TITAN/RAM] [QUOTE/JOB] REF: [QUOTE/JOB NUMBER] '+matLabel+' Inquiry';
+}
+
+function buildRfqPane(){
+  const el=document.getElementById('rfq-inner');
+  if(!LR||!LR.thkResults||!LR.thkResults.length){
+    el.innerHTML='<div class="empty" style="padding:64px 0"><span class="eicon">&#9993;</span>No nesting results yet.<br><span style="font-size:12px;margin-top:6px;display:block">Run nesting first, then return here to generate RFQs.</span></div>';
+    return;
+  }
+
+  // Collect one summary row per material+thickness combo
+  // thkResults: [{matLabel, thkLabel, parts, results:[{plate,sheets,plateWt,...}]}]
+  const rows=[];
+  LR.thkResults.forEach(tg=>{
+    const best=tg.results[0];
+    // thkLabel is like "A-20 @ 0.500"″" — split on " @ "
+    const atIdx=tg.thkLabel.indexOf(' @ ');
+    const mat=atIdx>-1?tg.thkLabel.slice(0,atIdx).trim():(tg.parts[0]&&tg.parts[0].mat||tg.thkLabel);
+    // thk display: remove trailing ″ artifact, show clean e.g. 0.500"
+    const thkRaw=atIdx>-1?tg.thkLabel.slice(atIdx+3).replace(/\u2033/g,'"').trim():tg.thkLabel;
+    const thk=thkRaw.endsWith('""')?thkRaw.slice(0,-1):thkRaw;
+    // Build an order-size label per sheet — snapped whole inches, e.g. "25" × 19""
+    const cutouts=best.sheets.map(sh=>{
+      if(sh.cutout) return (sh.cutout.orderW||Math.ceil(sh.cutout.w))+'″ × '+(sh.cutout.orderH||Math.ceil(sh.cutout.h))+'″';
+      return best.plate.w+'″ × '+best.plate.h+'″';
+    });
+    rows.push({
+      mat, thk,
+      cutouts,
+      sheets:best.sheets.length
+    });
+  });
+
+  // Group rows by vendor
+  // vendorGroups: Map<vendorId, {vendor, items:[row]}>
+  const vendorGroups=new Map();
+  const unmatched=[];
+
+  rows.forEach(row=>{
+    const matched=vendorsForMat(row.mat);
+    if(!matched.length){unmatched.push(row);return;}
+    // If multiple vendors supply this material, add to all (PM can choose which to send)
+    matched.forEach(v=>{
+      if(!vendorGroups.has(v.id)) vendorGroups.set(v.id,{vendor:v,items:[]});
+      vendorGroups.get(v.id).items.push(row);
+    });
+  });
+
+  let html='';
+
+  // Unmatched materials warning
+  if(unmatched.length){
+    html+='<div class="rfq-no-vendor"><strong>&#9888; No vendor match for:</strong> '+
+      unmatched.map(r=>'<span style="font-weight:600">'+r.mat+'</span>').join(', ')+
+      ' — add a vendor that supplies these materials in the <a href="#" onclick="go(\'vendors\');return false;" style="color:var(--amber-text);text-decoration:underline">Vendors tab</a>.</div>';
+  }
+
+  // One card per vendor
+  vendorGroups.forEach(({vendor,items},vid)=>{
+    const subject=buildRfqSubject(items);
+    const body=buildRfqBody(vendor.contact,items);
+    const mailtoLink='mailto:'+encodeURIComponent(vendor.email)
+      +'?subject='+encodeURIComponent(subject)
+      +'&body='+encodeURIComponent(body);
+
+    html+=`<div class="rfq-vendor-card" id="rfqvc_${vid}">
+      <div class="rfq-vendor-header">
+        <div>
+          <div class="rfq-vendor-name">${vendor.name}</div>
+          <div class="rfq-vendor-email">${vendor.contact} &nbsp;·&nbsp; ${vendor.email}</div>
+        </div>
+        <div class="rfq-mat-tags">${items.map(i=>`<span class="rfq-mat-tag">${i.mat} ${i.thk}</span>`).join('')}</div>
+      </div>
+      <table class="rfq-items-table">
+        <thead><tr><th>#</th><th>Line Item</th></tr></thead>
+        <tbody>${rfqTableRows(items)}</tbody>
+      </table>
+      <div class="rfq-actions">
+        <button class="btn btn-sm" onclick="toggleRfqPreview(${vid})">&#128065;&ensp;Preview Email</button>
+        <a class="btn btn-sm btn-red" href="${mailtoLink}">&#9993;&ensp;Open in Email Client</a>
+      </div>
+      <div class="rfq-preview-box" id="rfqprev_${vid}">
+        <div class="rfq-preview-field"><strong>To:</strong> ${vendor.email}</div>
+        <div class="rfq-preview-field"><strong>Subject:</strong> ${subject}</div>
+        <div class="rfq-preview-body">${body}</div>
+      </div>
+    </div>`;
+  });
+
+  if(!vendorGroups.size&&!unmatched.length){
+    html='<div class="empty" style="padding:48px 0"><span class="eicon">&#9993;</span>No vendor matches found.<br><span style="font-size:12px;margin-top:6px;display:block">Add vendors in the Vendors tab and assign materials.</span></div>';
+  }
+
+  el.innerHTML=html;
+}
+
+function toggleRfqPreview(vid){
+  const box=document.getElementById('rfqprev_'+vid);
+  if(!box)return;
+  const open=box.style.display==='block';
+  box.style.display=open?'none':'block';
+}
+
+// Init vendors pane on load
+renderVendors();
 </script>
 </body>
 </html>
