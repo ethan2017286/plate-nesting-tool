@@ -194,7 +194,7 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
     <div class="divider-v"></div>
     <div>
       <div class="header-title">Plate Nesting Tool</div>
-      <div class="header-sub">96&Prime;&times;240&Prime; MASTER &nbsp;&middot;&nbsp; 39&Prime;&times;78&Prime; TA/NB &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 24 &nbsp;&middot;&nbsp; LAST EDITED: JUL 31, 2026</div>
+      <div class="header-sub">96&Prime;&times;240&Prime; MASTER &nbsp;&middot;&nbsp; 39&Prime;&times;78&Prime; TA/NB &nbsp;&middot;&nbsp; 0.040&Prime; KERF &nbsp;&middot;&nbsp; 0.25&Prime; SPACING &nbsp;&middot;&nbsp; REV 28 &nbsp;&middot;&nbsp; LAST EDITED: JUL 31, 2026</div>
     </div>
   </div>
   <div class="flex" style="gap:10px">
@@ -260,26 +260,27 @@ code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px;font
       &#9888;&ensp;Select an entity (TITAN or RAM) in the <strong>Job Reference</strong> section above before using Bulk Import.
     </div>
     <div id="bulkImportBody">
-      <div id="bulkTITANInstructions" style="display:none;font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.8">
-        <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">TITAN Workbook paste</strong>&nbsp;
+      <div id="bulkTITANInstructions" style="display:none;font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.9">
+        <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">TITAN Workbook Paste</strong>&nbsp;
         Copy &amp; paste rows directly from the TITAN estimation sheet — tab-separated columns auto-detected.<br>
         <span style="font-size:11px">
-          Shape column mapping: &nbsp;
-          <code style="font-size:10px">Rect</code> = rectangle &nbsp;&bull;&nbsp;
-          <code style="font-size:10px">Cyl Fin, Cyl Rld</code> = cylinder &nbsp;&bull;&nbsp;
-          <code style="font-size:10px">Ring Cut, Ring Forg</code> = ring &nbsp;&bull;&nbsp;
-          <code style="font-size:10px">Ring Sect</code> = ring sect (segmented) &nbsp;&bull;&nbsp;
-          <code style="font-size:10px">Disc Plate, Disc Forg</code> = disc (solid round)
+          Shape column values recognized:<br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Rectangle&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Rect</code><br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Cylinder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Cyl Fin, Cyl Rld</code><br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Ring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Ring Cut, Ring Forg</code><br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Ring Sect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Ring Sect</code><br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Disc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Disc Plate, Disc Forg</code>
         </span>
       </div>
-      <div id="bulkRAMInstructions" style="display:none;font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.8">
-        <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">RAM Workbook paste</strong>&nbsp;
-        Copy &amp; paste rows directly from the RAM estimation sheet (Name &rarr; Description &rarr; Qty).<br>
+      <div id="bulkRAMInstructions" style="display:none;font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.9">
+        <strong style="color:var(--text2);font-size:11px;letter-spacing:0.05em;text-transform:uppercase">RAM Workbook Paste</strong>&nbsp;
+        Copy &amp; paste rows directly from the RAM estimation sheet. Columns must be in order: <strong style="color:var(--text2)">Name &rarr; Description &rarr; Qty</strong>.<br>
         <span style="font-size:11px">
-          Description format: &nbsp;
-          <code style="font-size:10px">Thk X Dim1 X Dim2; Material</code> = rectangle &nbsp;&bull;&nbsp;
-          <code style="font-size:10px">Thk X OD X ID; Material</code> = ring &nbsp;&bull;&nbsp;
-          <code style="font-size:10px">Thk X OD; Material</code> = disc
+          The Description column determines the part shape:<br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Plate (Rect)&nbsp;&nbsp;</strong> <code style="font-size:10px">Thk X Width X Length; Material</code><br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Ring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Thk X OD X ID; Material</code><br>
+          &nbsp;&nbsp;<strong style="color:var(--text2)">Disc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> <code style="font-size:10px">Thk X OD; Material</code><br>
+          Any notes after the material (e.g. <code style="font-size:10px">CS Weld last</code>) are automatically ignored.
         </span>
       </div>
       <textarea id="csvIn" rows="5" placeholder="Select an entity above to enable Bulk Import…"></textarea>
@@ -629,8 +630,10 @@ function loadRAMCSV(raw){
     const semi=desc.indexOf(';');
     if(semi<0){flagged.push((name||'?')+': Missing semicolon delimiter in description — skipped');skipped++;return;}
     const dimPart=desc.slice(0,semi).trim();
-    const mat=desc.slice(semi+1).trim().toUpperCase()
-                   .replace(/\s+/g,'');   // normalise e.g. " 304 " -> "304"
+    // Take only the first whitespace-delimited token after the semicolon.
+    // Anything following (notes, annotations, etc.) is silently ignored.
+    // e.g. 'CS Weld last' -> 'CS', '304 see dwg 12' -> '304'
+    const mat=desc.slice(semi+1).trim().split(/[\s\t]+/)[0].toUpperCase();
 
     // Parse dimension tokens — strip all quote/inch marks, split on X (case-insensitive)
     // Each token may have a suffix: OD, ID (case-insensitive)
@@ -1474,15 +1477,21 @@ function runNesting(){
         });
         return tot;
       }
-      // Three whole-job strategies, cheapest total wins. Comparing true job
-      // totals (not per-sheet scores) is what makes the sweep safe: a candidate
-      // that looks good on one sheet but strands an expensive remainder loses.
+      // Three whole-job strategies — select by: fewest plates first, then
+      // cheapest area among equal plate counts. (Option A logic: minimise the
+      // number of plates before optimising material cost, so a 16%-cheaper
+      // 3-plate result never beats a slightly more expensive 1-plate result.)
       const strategies=[runJob(0),runJob(1),runJob(2)];
       let chosen=strategies[0], chosenCost=jobCost(strategies[0].sheets);
       for(let si=1;si<strategies.length;si++){
         const s=strategies[si], sc2=jobCost(s.sheets);
-        if(s.rem.length<chosen.rem.length
-           ||(s.rem.length===chosen.rem.length&&sc2<chosenCost-0.001)){
+        const fewerUnplaced=s.rem.length<chosen.rem.length;
+        const sameUnplaced=s.rem.length===chosen.rem.length;
+        const fewerSheets=s.sheets.length<chosen.sheets.length;
+        const sameSheets=s.sheets.length===chosen.sheets.length;
+        if(fewerUnplaced
+           ||(sameUnplaced&&fewerSheets)
+           ||(sameUnplaced&&sameSheets&&sc2<chosenCost-0.001)){
           chosen=s; chosenCost=sc2;
         }
       }
